@@ -1,0 +1,59 @@
+language ReductionDSL
+    version: 1
+    entities (↓name):
+
+        concept ArgumentBinding
+            features (↓name):
+                argument -> ArgumentDeclaration
+                value: Value
+
+        concept ArgumentDeclaration implements INamed
+
+        concept ArgumentReference implements Value
+            features (↓name):
+                argument -> ArgumentDeclaration
+
+        concept BinaryOperation implements Value
+            features (↓name):
+                left: Value
+                operator: BinaryOperators
+                right: Value
+
+        enumeration BinaryOperators
+            literals:
+                plus
+                plusWithPositiveOperands
+
+        concept FunctionDeclaration implements INamed, Statement
+            features (↓name):
+                arguments: ArgumentDeclaration[0..*]
+                value: Value
+
+        concept FunctionInvocation implements Statement, Value
+            features (↓name):
+                bindings: ArgumentBinding[0..*]
+                function -> FunctionDeclaration
+
+        interface Literal extends Value
+
+        concept NumberLiteral implements Literal
+            features (↓name):
+                value: Integer
+
+        concept Parentheses implements Value
+            features (↓name):
+                value: Value
+
+        concept Program
+            features (↓name):
+                statements: Statement[0..*]
+
+        interface Statement
+
+        concept StringLiteral implements Literal
+            features (↓name):
+                value: String
+
+        interface Value
+
+

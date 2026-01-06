@@ -1,0 +1,64 @@
+@startuml
+hide empty members
+
+' qualified name: "ReductionDSL"
+
+
+class ArgumentBinding
+
+class ArgumentDeclaration implements INamed
+
+class ArgumentReference implements Value
+
+class BinaryOperation implements Value {
+  operator: BinaryOperators
+}
+
+enum BinaryOperators {
+  plus
+  plusWithPositiveOperands
+}
+
+class FunctionDeclaration implements INamed, Statement
+
+class FunctionInvocation implements Statement, Value
+
+interface Literal extends Value
+class NumberLiteral implements Literal {
+  value: Integer
+}
+
+class Parentheses implements Value
+
+class Program
+
+interface Statement
+class StringLiteral implements Literal {
+  value: String
+}
+
+interface Value
+
+
+' relations:
+
+ArgumentBinding "*" --> "1" ArgumentDeclaration: argument
+ArgumentBinding "1" o--> "1" Value: value
+
+ArgumentReference "*" --> "1" ArgumentDeclaration: argument
+BinaryOperation "1" o--> "1" Value: left
+BinaryOperation "1" o--> "1" Value: right
+
+FunctionDeclaration "1" o--> "*" ArgumentDeclaration: arguments
+FunctionDeclaration "1" o--> "1" Value: value
+FunctionInvocation "*" --> "1" FunctionDeclaration: function
+FunctionInvocation "1" o--> "*" ArgumentBinding: bindings
+
+
+Parentheses "1" o--> "1" Value: value
+Program "1" o--> "*" Statement: statements
+
+
+
+
+@enduml
