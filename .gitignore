@@ -1,0 +1,9 @@
+# IntelliJ IDEA:
+/.idea
+
+# NPM:
+node_modules/
+
+# TypeScript
+dist/
+

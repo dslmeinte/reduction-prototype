@@ -1,0 +1,23 @@
+{
+    "name": "prototype",
+    "version": "0.0.0-dev.0",
+    "description": "PoC implementation",
+    "type": "module",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dslmeinte/reduction-prototype.git"
+    },
+    "scripts": {
+        "clean": "npx rimraf dist node_modules",
+        "build": "tsc",
+        "lint": "eslint src"
+    },
+    "dependencies": {
+        "@lionweb/class-core": "0.7.2",
+        "@lionweb/core": "0.7.2"
+    },
+    "devDependencies": {
+        "@types/node": "25.0.3"
+    }
+}
