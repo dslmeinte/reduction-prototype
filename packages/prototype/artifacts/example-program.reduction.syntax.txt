@@ -1,0 +1,4 @@
+program:
+    [6 {= reduction of: [3 {= reduction of: <1> ⊕ [2 {= reduction of: ref<X>}]}] + <3>}]
+    [3 {= reduction of: [0 {= reduction of: <1> ⊕ [-1 {= reduction of: ref<X>}]}] + <3>}]
+    <(1 ⊕ ref<X>) + 3>

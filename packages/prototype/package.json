@@ -19,7 +19,8 @@
         "@lionweb/class-core": "0.7.2",
         "@lionweb/core": "0.7.2",
         "@lionweb/json": "0.7.2",
-        "@lionweb/utilities": "0.7.2"
+        "@lionweb/utilities": "0.7.2",
+        "littoral-templates": "0.5.1"
     },
     "devDependencies": {
         "@types/node": "25.0.3"

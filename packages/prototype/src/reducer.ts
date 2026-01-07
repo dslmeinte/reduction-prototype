@@ -12,12 +12,10 @@ import {
     WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
 import { isReducible } from "./gen/reducibles.g.js"
-import { Reducer } from "./reduction.js"
 import { binaryOperation, numberLiteral, transientId, withTrace, wrappedOriginalNode } from "./factory.js"
+import { unwrap } from "./functions.js"
+import { Reducer } from "./reduction.js"
 
-
-const unwrap = (reducible: Reducible) =>
-    reducible instanceof WrappedOriginalNode ? reducible.originalNode : reducible
 
 export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: ArgumentBinding[])=> {
 
