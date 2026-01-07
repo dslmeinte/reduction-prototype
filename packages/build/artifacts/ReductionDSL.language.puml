@@ -42,6 +42,8 @@ annotation TraceAnnotation
 TraceAnnotation ..# Reducible : <i>annotates</i>
 
 interface Value extends Reducible, Statement
+class WrappedOriginalNode implements Reducible
+
 
 
 ' relations:
@@ -59,12 +61,13 @@ FunctionInvocation "*" --> "1" FunctionDeclaration: function
 FunctionInvocation "1" o--> "*" ArgumentBinding: bindings
 
 
-Parentheses "1" o--> "1" Value: value
+Parentheses "1" o--> "1" Value: inner
 Program "1" o--> "*" Statement: statements
 
 
 
 TraceAnnotation "*" --> "1" Reducible: reducedNode
 
+WrappedOriginalNode "*" --> "1" Reducible: originalNode
 
 @enduml

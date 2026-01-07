@@ -42,7 +42,7 @@ language ReductionDSL
 
         concept Parentheses implements Value
             features (↓name):
-                value: Value
+                inner: Value
 
         concept Program implements Reducible
             features (↓name):
@@ -62,5 +62,9 @@ language ReductionDSL
                 reducedNode -> Reducible
 
         interface Value extends Reducible, Statement
+
+        concept WrappedOriginalNode implements Reducible
+            features (↓name):
+                originalNode -> Reducible
 
 

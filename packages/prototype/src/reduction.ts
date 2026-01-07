@@ -7,6 +7,9 @@ export type Finding = {
     findingMessage: string
 }
 
+export const verbalizationOf = ({node, findingMessage}: Finding) =>
+    `on node with ID "${node.id}": ${findingMessage}`
+
 export type Reduction = {
     value: Reducible
     findings: Finding[]

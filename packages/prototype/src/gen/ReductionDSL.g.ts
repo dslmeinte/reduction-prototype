@@ -125,10 +125,10 @@ export class ReductionDSLBase implements ILanguageBase {
         this.ensureWiredUp();
         return this._Parentheses;
     }
-    private readonly _Parentheses_value = new Containment(this._Parentheses, "value", "ReductionDSL-Parentheses-value", "ReductionDSL-Parentheses-value");
-    get Parentheses_value(): Containment {
+    private readonly _Parentheses_inner = new Containment(this._Parentheses, "inner", "ReductionDSL-Parentheses-inner", "ReductionDSL-Parentheses-inner");
+    get Parentheses_inner(): Containment {
         this.ensureWiredUp();
-        return this._Parentheses_value;
+        return this._Parentheses_inner;
     }
 
     public readonly _BinaryOperators = new Enumeration(this._language, "BinaryOperators", "ReductionDSL-BinaryOperators", "ReductionDSL-BinaryOperators");
@@ -233,12 +233,23 @@ export class ReductionDSLBase implements ILanguageBase {
         return this._TraceAnnotation_reducedNode;
     }
 
+    public readonly _WrappedOriginalNode = new Concept(this._language, "WrappedOriginalNode", "ReductionDSL-WrappedOriginalNode", "ReductionDSL-WrappedOriginalNode", false);
+    get WrappedOriginalNode(): Concept {
+        this.ensureWiredUp();
+        return this._WrappedOriginalNode;
+    }
+    private readonly _WrappedOriginalNode_originalNode = new Reference(this._WrappedOriginalNode, "originalNode", "ReductionDSL-WrappedOriginalNode-originalNode", "ReductionDSL-WrappedOriginalNode-originalNode");
+    get WrappedOriginalNode_originalNode(): Reference {
+        this.ensureWiredUp();
+        return this._WrappedOriginalNode_originalNode;
+    }
+
     private _wiredUp: boolean = false;
     private ensureWiredUp() {
         if (this._wiredUp) {
             return;
         }
-        this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._Parentheses, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._TraceAnnotation);
+        this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._Parentheses, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._TraceAnnotation, this._WrappedOriginalNode);
         this._Value.extending(this._Reducible, this._Statement);
         this._ArgumentDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed);
         this._FunctionDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed, this._Statement);
@@ -253,8 +264,8 @@ export class ReductionDSLBase implements ILanguageBase {
         this._StringLiteral.havingFeatures(this._StringLiteral_value);
         this._StringLiteral_value.ofType(LionCore_builtinsBase.INSTANCE._String);
         this._Parentheses.implementing(this._Value);
-        this._Parentheses.havingFeatures(this._Parentheses_value);
-        this._Parentheses_value.ofType(this._Value);
+        this._Parentheses.havingFeatures(this._Parentheses_inner);
+        this._Parentheses_inner.ofType(this._Value);
         this._BinaryOperators.havingLiterals(this._BinaryOperators_plus, this._BinaryOperators_plusWithPositiveOperands);
         this._BinaryOperation.implementing(this._Value);
         this._BinaryOperation.havingFeatures(this._BinaryOperation_operator, this._BinaryOperation_left, this._BinaryOperation_right);
@@ -276,6 +287,9 @@ export class ReductionDSLBase implements ILanguageBase {
         this._Program_statements.ofType(this._Statement);
         this._TraceAnnotation.havingFeatures(this._TraceAnnotation_reducedNode);
         this._TraceAnnotation_reducedNode.ofType(this._Reducible);
+        this._WrappedOriginalNode.implementing(this._Reducible);
+        this._WrappedOriginalNode.havingFeatures(this._WrappedOriginalNode_originalNode);
+        this._WrappedOriginalNode_originalNode.ofType(this._Reducible);
         this._wiredUp = true;
     }
 
@@ -293,6 +307,7 @@ export class ReductionDSLBase implements ILanguageBase {
                 case this._ArgumentReference.key: return ArgumentReference.create(id, receiveDelta);
                 case this._Program.key: return Program.create(id, receiveDelta);
                 case this._TraceAnnotation.key: return TraceAnnotation.create(id, receiveDelta);
+                case this._WrappedOriginalNode.key: return WrappedOriginalNode.create(id, receiveDelta);
                 default: {
                     const {language} = classifier;
                     throw new Error(`can't instantiate ${classifier.name} (key=${classifier.key}): classifier is not known in language ${language.name} (key=${language.key}, version=${language.version})`);
@@ -476,25 +491,25 @@ export class Parentheses extends NodeBase implements Value {
         return new Parentheses(ReductionDSLBase.INSTANCE.Parentheses, id, receiveDelta, parentInfo);
     }
 
-    private readonly _value: RequiredSingleContainmentValueManager<Value>;
-    get value(): Value {
-        return this._value.get();
+    private readonly _inner: RequiredSingleContainmentValueManager<Value>;
+    get inner(): Value {
+        return this._inner.get();
     }
-    set value(newValue: Value) {
-        this._value.set(newValue);
+    set inner(newValue: Value) {
+        this._inner.set(newValue);
     }
-    replaceValueWith(newValue: Value) {
-        this._value.replaceWith(newValue);
+    replaceInnerWith(newValue: Value) {
+        this._inner.replaceWith(newValue);
     }
 
     public constructor(classifier: Classifier, id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage) {
         super(classifier, id, receiveDelta, parentInfo);
-        this._value = new RequiredSingleContainmentValueManager<Value>(ReductionDSLBase.INSTANCE.Parentheses_value, this);
+        this._inner = new RequiredSingleContainmentValueManager<Value>(ReductionDSLBase.INSTANCE.Parentheses_inner, this);
     }
 
     getContainmentValueManager(containment: Containment): ContainmentValueManager<INodeBase> {
-        if (containment.key === ReductionDSLBase.INSTANCE.Parentheses_value.key) {
-            return this._value;
+        if (containment.key === ReductionDSLBase.INSTANCE.Parentheses_inner.key) {
+            return this._inner;
         }
         return super.getContainmentValueManager(containment);
     }
@@ -747,6 +762,32 @@ export class TraceAnnotation extends NodeBase {
     getReferenceValueManager(reference: Reference): ReferenceValueManager<INodeBase> {
         if (reference.key === ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode.key) {
             return this._reducedNode;
+        }
+        return super.getReferenceValueManager(reference);
+    }
+}
+
+export class WrappedOriginalNode extends NodeBase implements Reducible {
+    static create(id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage): WrappedOriginalNode {
+        return new WrappedOriginalNode(ReductionDSLBase.INSTANCE.WrappedOriginalNode, id, receiveDelta, parentInfo);
+    }
+
+    private readonly _originalNode: RequiredSingleReferenceValueManager<Reducible>;
+    get originalNode(): SingleRef<Reducible> {
+        return this._originalNode.get();
+    }
+    set originalNode(newValue: SingleRef<Reducible>) {
+        this._originalNode.set(newValue);
+    }
+
+    public constructor(classifier: Classifier, id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage) {
+        super(classifier, id, receiveDelta, parentInfo);
+        this._originalNode = new RequiredSingleReferenceValueManager<Reducible>(ReductionDSLBase.INSTANCE.WrappedOriginalNode_originalNode, this);
+    }
+
+    getReferenceValueManager(reference: Reference): ReferenceValueManager<INodeBase> {
+        if (reference.key === ReductionDSLBase.INSTANCE.WrappedOriginalNode_originalNode.key) {
+            return this._originalNode;
         }
         return super.getReferenceValueManager(reference);
     }

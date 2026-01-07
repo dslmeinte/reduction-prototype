@@ -5,21 +5,21 @@ Program (id: id-18)
                 ArgumentDeclaration (id: id-2)
                     name = "X"
             value:
-                BinaryOperation (id: id-7)
+                BinaryOperation (id: id-8)
                     operator = ReductionDSL-BinaryOperators-plus
                     left:
                         Parentheses (id: id-6)
-                            value:
-                                BinaryOperation (id: id-4)
+                            inner:
+                                BinaryOperation (id: id-5)
                                     operator = ReductionDSL-BinaryOperators-plusWithPositiveOperands
                                     left:
-                                        NumberLiteral (id: id-5)
+                                        NumberLiteral (id: id-4)
                                             value = 1
                                     right:
                                         ArgumentReference (id: id-3)
                                             argument -> id-2
                     right:
-                        NumberLiteral (id: id-8)
+                        NumberLiteral (id: id-7)
                             value = 3
             name = "foo"
         FunctionInvocation (id: id-11)
@@ -29,7 +29,7 @@ Program (id: id-18)
                     argument -> id-2
                     value:
                         NumberLiteral (id: id-9)
-                            value = 1
+                            value = 2
         FunctionInvocation (id: id-14)
             function -> id-1
             bindings:

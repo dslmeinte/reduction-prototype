@@ -31,7 +31,7 @@ const StringLiteral = factory.concept("StringLiteral", false).implementing(Liter
 factory.property(StringLiteral, "value").ofType(stringDataType)
 
 const Parentheses = factory.concept("Parentheses", false).implementing(Value)
-factory.containment(Parentheses, "value").ofType(Value)
+factory.containment(Parentheses, "inner").ofType(Value)
 
 const BinaryOperators = factory.enumeration("BinaryOperators")
 factory.enumerationLiteral(BinaryOperators, "plus")
@@ -60,4 +60,7 @@ factory.containment(Program, "statements").ofType(Statement).isOptional().isMult
 
 const TraceAnnotation = factory.annotation("TraceAnnotation").annotating(Reducible)
 factory.reference(TraceAnnotation, "reducedNode").ofType(Reducible)
+
+const WrappedOriginalNode = factory.concept("WrappedOriginalNode", false).implementing(Reducible)
+factory.reference(WrappedOriginalNode, "originalNode").ofType(Reducible)
 

@@ -1,28 +1,46 @@
 import {
     ArgumentBinding,
     ArgumentDeclaration,
+    BinaryOperation,
+    BinaryOperators,
     FunctionDeclaration,
     FunctionInvocation,
     NumberLiteral,
     Reducible,
+    StringLiteral,
     TraceAnnotation,
-    Value
+    Value,
+    WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
+import { LionWebId } from "@lionweb/json"
 
 
-let previousId = 0
-export const id = () => `id-${++previousId}`
+export type IdProvider = () => LionWebId
+let previousId = 0  // (use one integer sequence to avoid confusion with duplicate numbers)
+const idProviderWith = (prefix: string) =>
+    () => `${prefix}${++previousId}`
+
+export const originalId = idProviderWith("id-")
+export const transientId = idProviderWith("transient-id-")
 
 
-export const numberLiteral = (value: number) => {
-    const node = NumberLiteral.create(id())
-    node.value = value
-    return node
+export const argumentBinding = (argument: ArgumentDeclaration, value: Value, idProvider = originalId) => {
+    const binding = ArgumentBinding.create(idProvider())
+    binding.argument = argument
+    binding.value = value
+    return binding
 }
 
+export const binaryOperation = (operator: BinaryOperators, left: Value, right: Value, idProvider = originalId) => {
+    const binaryOperation = BinaryOperation.create(idProvider())
+    binaryOperation.operator = operator
+    binaryOperation.left = left
+    binaryOperation.right = right
+    return binaryOperation
+}
 
-export const functionInvocation = (functionDeclaration: FunctionDeclaration, ...argumentBindings: ArgumentBinding[]) => {
-    const invocation = FunctionInvocation.create(id())
+export const functionInvocation = (functionDeclaration: FunctionDeclaration, argumentBindings: ArgumentBinding[], idProvider = originalId) => {
+    const invocation = FunctionInvocation.create(idProvider())
     invocation.function = functionDeclaration
     argumentBindings.forEach((binding) => {
         invocation.addBindings(binding)
@@ -30,22 +48,30 @@ export const functionInvocation = (functionDeclaration: FunctionDeclaration, ...
     return invocation
 }
 
+export const numberLiteral = (value: number, idProvider = originalId) => {
+    const node = NumberLiteral.create(idProvider())
+    node.value = value
+    return node
+}
 
-export const argumentBinding = (argument: ArgumentDeclaration, value: Value) => {
-    const binding = ArgumentBinding.create(id())
-    binding.argument = argument
-    binding.value = value
-    return binding
+export const stringLiteral = (value: string, idProvider = originalId) => {
+    const node = StringLiteral.create(idProvider())
+    node.value = value
+    return node
 }
 
 
-let previousTransientId = 0
-export const transientId = () => `transient-id-${++previousTransientId}`
 
 export const withTrace = (resultNode: Reducible, reducedNode: Reducible) => {
-    const traceAnnotation = TraceAnnotation.create(id())
+    const traceAnnotation = TraceAnnotation.create(transientId())
     traceAnnotation.reducedNode = reducedNode
     resultNode.addAnnotation(traceAnnotation)
     return resultNode
+}
+
+export const wrappedOriginalNode = (originalNode: Reducible) => {
+    const wrappedOriginalNode = WrappedOriginalNode.create(transientId())
+    wrappedOriginalNode.originalNode = originalNode
+    return wrappedOriginalNode
 }
 

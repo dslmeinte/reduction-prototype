@@ -1,55 +1,52 @@
 import {
     ArgumentDeclaration,
     ArgumentReference,
-    BinaryOperation,
     BinaryOperators,
     FunctionDeclaration,
     Parentheses,
     Program,
-    StringLiteral,
     Value
 } from "./gen/ReductionDSL.g.js"
-import { argumentBinding, functionInvocation, id, numberLiteral } from "./factory.js"
+import {
+    argumentBinding,
+    binaryOperation,
+    functionInvocation,
+    numberLiteral,
+    originalId,
+    stringLiteral
+} from "./factory.js"
 
 
-const foo = FunctionDeclaration.create(id())
+const foo = FunctionDeclaration.create(originalId())
 foo.name = "foo"
-const argX = ArgumentDeclaration.create(id())
+const argX = ArgumentDeclaration.create(originalId())
 argX.name = "X"
 foo.addArguments(argX)
 
-const refX = ArgumentReference.create(id())
+const refX = ArgumentReference.create(originalId())
 refX.argument = argX
 
-const innerPlus = BinaryOperation.create(id())
-innerPlus.operator = BinaryOperators.plusWithPositiveOperands
-innerPlus.left = numberLiteral(1)
-innerPlus.right = refX
+const innerPlus = binaryOperation(BinaryOperators.plusWithPositiveOperands, numberLiteral(1), refX)
 
-const parentheses = Parentheses.create(id())
-parentheses.value = innerPlus
+const parentheses = Parentheses.create(originalId())
+parentheses.inner = innerPlus
 
-const outerPlus = BinaryOperation.create(id())
-outerPlus.operator = BinaryOperators.plus
-outerPlus.left = parentheses
-outerPlus.right = numberLiteral(3)
+const outerPlus = binaryOperation(BinaryOperators.plus, parentheses, numberLiteral(3))
 
 foo.value = outerPlus
 
 
 const invokeFooWith = (value: Value) =>
-    functionInvocation(foo, argumentBinding(argX, value))
+    functionInvocation(foo, [argumentBinding(argX, value)])
 
-const fooAt1 = invokeFooWith(numberLiteral(1))
+const fooAt2 = invokeFooWith(numberLiteral(2))
 const fooAt_1 = invokeFooWith(numberLiteral(-1))
-const bar = StringLiteral.create(id())
-bar.value = "bar"
-const fooAtBar = invokeFooWith(bar)
+const fooAtBar = invokeFooWith(stringLiteral("bar"))
 
 
-export const exampleProgram = Program.create(id())
+export const exampleProgram = Program.create(originalId())
 exampleProgram.addStatements(foo)
-exampleProgram.addStatements(fooAt1)
+exampleProgram.addStatements(fooAt2)
 exampleProgram.addStatements(fooAt_1)
 exampleProgram.addStatements(fooAtBar)
 

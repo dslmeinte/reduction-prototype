@@ -4,7 +4,7 @@ import { writeFileSync } from "fs"
 import { join } from "path"
 
 import { languageName, reductionDSLLanguage } from "./language-definition.js"
-import { generateReducersTemplate } from "./reductors-template-generator.js"
+import { contentsOfReduciblesFile } from "./reducibles-generator.js"
 
 
 const language = reductionDSLLanguage
@@ -16,5 +16,5 @@ writeFileSync(join(artifactsPath, `${languageName}.language.puml`), generatePlan
 const genPath = "../prototype/src/gen"
 generateLanguage(language, genPath)
 
-writeFileSync(join(genPath, "reducers-base.g.ts"), generateReducersTemplate())
+writeFileSync(join(genPath, "reducibles.g.ts"), contentsOfReduciblesFile())
 

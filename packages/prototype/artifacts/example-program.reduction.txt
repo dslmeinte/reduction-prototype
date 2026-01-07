@@ -1,0 +1,14 @@
+Program (id: transient-id-45)
+    statements:
+        NumberLiteral (id: transient-id-27)
+            value = 6
+            @ TraceAnnotation (id: transient-id-28)
+                reducedNode -> transient-id-26
+
+        NumberLiteral (id: transient-id-37)
+            value = 3
+            @ TraceAnnotation (id: transient-id-38)
+                reducedNode -> transient-id-36
+
+        WrappedOriginalNode (id: transient-id-44)
+            originalNode -> id-8
