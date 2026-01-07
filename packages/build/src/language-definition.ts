@@ -57,10 +57,14 @@ factory.reference(ArgumentReference, "argument").ofType(ArgumentDeclaration)
 const Program = factory.concept("Program", false).implementing(Reducible)
 factory.containment(Program, "statements").ofType(Statement).isOptional().isMultiple()
 
+// wraps an original node, so we can re-use that node as a child of a transient node, without moving the original node:
+const WrappedOriginalNode = factory.concept("WrappedOriginalNode", false).implementing(Reducible)
+factory.reference(WrappedOriginalNode, "originalNode").ofType(Reducible)
+
 
 const TraceAnnotation = factory.annotation("TraceAnnotation").annotating(Reducible)
 factory.reference(TraceAnnotation, "reducedNode").ofType(Reducible)
-
-const WrappedOriginalNode = factory.concept("WrappedOriginalNode", false).implementing(Reducible)
-factory.reference(WrappedOriginalNode, "originalNode").ofType(Reducible)
+// Note: needs to be a reference and not a containment.
+// Otherwise, if the result of reduction ends up being a child of another transient node, this containment will get emptied.
+// TODO  also reference the ArgumentBinding-s that were relevant
 

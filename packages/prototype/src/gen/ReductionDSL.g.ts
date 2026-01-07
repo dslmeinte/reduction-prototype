@@ -222,17 +222,6 @@ export class ReductionDSLBase implements ILanguageBase {
         return this._Program_statements;
     }
 
-    public readonly _TraceAnnotation = new Annotation(this._language, "TraceAnnotation", "ReductionDSL-TraceAnnotation", "ReductionDSL-TraceAnnotation");
-    get TraceAnnotation(): Annotation {
-        this.ensureWiredUp();
-        return this._TraceAnnotation;
-    }
-    private readonly _TraceAnnotation_reducedNode = new Reference(this._TraceAnnotation, "reducedNode", "ReductionDSL-TraceAnnotation-reducedNode", "ReductionDSL-TraceAnnotation-reducedNode");
-    get TraceAnnotation_reducedNode(): Reference {
-        this.ensureWiredUp();
-        return this._TraceAnnotation_reducedNode;
-    }
-
     public readonly _WrappedOriginalNode = new Concept(this._language, "WrappedOriginalNode", "ReductionDSL-WrappedOriginalNode", "ReductionDSL-WrappedOriginalNode", false);
     get WrappedOriginalNode(): Concept {
         this.ensureWiredUp();
@@ -244,12 +233,23 @@ export class ReductionDSLBase implements ILanguageBase {
         return this._WrappedOriginalNode_originalNode;
     }
 
+    public readonly _TraceAnnotation = new Annotation(this._language, "TraceAnnotation", "ReductionDSL-TraceAnnotation", "ReductionDSL-TraceAnnotation");
+    get TraceAnnotation(): Annotation {
+        this.ensureWiredUp();
+        return this._TraceAnnotation;
+    }
+    private readonly _TraceAnnotation_reducedNode = new Reference(this._TraceAnnotation, "reducedNode", "ReductionDSL-TraceAnnotation-reducedNode", "ReductionDSL-TraceAnnotation-reducedNode");
+    get TraceAnnotation_reducedNode(): Reference {
+        this.ensureWiredUp();
+        return this._TraceAnnotation_reducedNode;
+    }
+
     private _wiredUp: boolean = false;
     private ensureWiredUp() {
         if (this._wiredUp) {
             return;
         }
-        this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._Parentheses, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._TraceAnnotation, this._WrappedOriginalNode);
+        this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._Parentheses, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._WrappedOriginalNode, this._TraceAnnotation);
         this._Value.extending(this._Reducible, this._Statement);
         this._ArgumentDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed);
         this._FunctionDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed, this._Statement);
@@ -285,11 +285,11 @@ export class ReductionDSLBase implements ILanguageBase {
         this._Program.implementing(this._Reducible);
         this._Program.havingFeatures(this._Program_statements);
         this._Program_statements.ofType(this._Statement);
-        this._TraceAnnotation.havingFeatures(this._TraceAnnotation_reducedNode);
-        this._TraceAnnotation_reducedNode.ofType(this._Reducible);
         this._WrappedOriginalNode.implementing(this._Reducible);
         this._WrappedOriginalNode.havingFeatures(this._WrappedOriginalNode_originalNode);
         this._WrappedOriginalNode_originalNode.ofType(this._Reducible);
+        this._TraceAnnotation.havingFeatures(this._TraceAnnotation_reducedNode);
+        this._TraceAnnotation_reducedNode.ofType(this._Reducible);
         this._wiredUp = true;
     }
 
@@ -306,8 +306,8 @@ export class ReductionDSLBase implements ILanguageBase {
                 case this._FunctionInvocation.key: return FunctionInvocation.create(id, receiveDelta);
                 case this._ArgumentReference.key: return ArgumentReference.create(id, receiveDelta);
                 case this._Program.key: return Program.create(id, receiveDelta);
-                case this._TraceAnnotation.key: return TraceAnnotation.create(id, receiveDelta);
                 case this._WrappedOriginalNode.key: return WrappedOriginalNode.create(id, receiveDelta);
+                case this._TraceAnnotation.key: return TraceAnnotation.create(id, receiveDelta);
                 default: {
                     const {language} = classifier;
                     throw new Error(`can't instantiate ${classifier.name} (key=${classifier.key}): classifier is not known in language ${language.name} (key=${language.key}, version=${language.version})`);
@@ -741,32 +741,6 @@ export class Program extends NodeBase implements Reducible {
     }
 }
 
-export class TraceAnnotation extends NodeBase {
-    static create(id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage): TraceAnnotation {
-        return new TraceAnnotation(ReductionDSLBase.INSTANCE.TraceAnnotation, id, receiveDelta, parentInfo);
-    }
-
-    private readonly _reducedNode: RequiredSingleReferenceValueManager<Reducible>;
-    get reducedNode(): SingleRef<Reducible> {
-        return this._reducedNode.get();
-    }
-    set reducedNode(newValue: SingleRef<Reducible>) {
-        this._reducedNode.set(newValue);
-    }
-
-    public constructor(classifier: Classifier, id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage) {
-        super(classifier, id, receiveDelta, parentInfo);
-        this._reducedNode = new RequiredSingleReferenceValueManager<Reducible>(ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode, this);
-    }
-
-    getReferenceValueManager(reference: Reference): ReferenceValueManager<INodeBase> {
-        if (reference.key === ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode.key) {
-            return this._reducedNode;
-        }
-        return super.getReferenceValueManager(reference);
-    }
-}
-
 export class WrappedOriginalNode extends NodeBase implements Reducible {
     static create(id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage): WrappedOriginalNode {
         return new WrappedOriginalNode(ReductionDSLBase.INSTANCE.WrappedOriginalNode, id, receiveDelta, parentInfo);
@@ -788,6 +762,32 @@ export class WrappedOriginalNode extends NodeBase implements Reducible {
     getReferenceValueManager(reference: Reference): ReferenceValueManager<INodeBase> {
         if (reference.key === ReductionDSLBase.INSTANCE.WrappedOriginalNode_originalNode.key) {
             return this._originalNode;
+        }
+        return super.getReferenceValueManager(reference);
+    }
+}
+
+export class TraceAnnotation extends NodeBase {
+    static create(id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage): TraceAnnotation {
+        return new TraceAnnotation(ReductionDSLBase.INSTANCE.TraceAnnotation, id, receiveDelta, parentInfo);
+    }
+
+    private readonly _reducedNode: RequiredSingleReferenceValueManager<Reducible>;
+    get reducedNode(): SingleRef<Reducible> {
+        return this._reducedNode.get();
+    }
+    set reducedNode(newValue: SingleRef<Reducible>) {
+        this._reducedNode.set(newValue);
+    }
+
+    public constructor(classifier: Classifier, id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage) {
+        super(classifier, id, receiveDelta, parentInfo);
+        this._reducedNode = new RequiredSingleReferenceValueManager<Reducible>(ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode, this);
+    }
+
+    getReferenceValueManager(reference: Reference): ReferenceValueManager<INodeBase> {
+        if (reference.key === ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode.key) {
+            return this._reducedNode;
         }
         return super.getReferenceValueManager(reference);
     }

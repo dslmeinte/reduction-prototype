@@ -14,11 +14,12 @@ import {
 import { isReducible } from "./gen/reducibles.g.js"
 import { binaryOperation, numberLiteral, withTrace, wrappedOriginalNode } from "./factory.js"
 import { unwrap } from "./functions.js"
-import { Reducer } from "./reduction.js"
 import { transientId } from "./ids.js"
+import { Reducer, Reduction } from "./reduction.js"
+import { textRenderOf } from "./renderer.js"
 
 
-export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: ArgumentBinding[])=> {
+export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: ArgumentBinding[]): Reduction => {
 
     if (node instanceof ArgumentReference) {
         const lookups = nonLocalValues.filter((binding) => binding.argument === node.argument)
@@ -41,7 +42,9 @@ export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: Argu
     if (node instanceof BinaryOperation) {
         const leftReduction = reduce(node.left, nonLocalValues)
         const rightReduction = reduce(node.right, nonLocalValues)
-        if (unwrap(leftReduction.value) instanceof NumberLiteral && unwrap(rightReduction.value) instanceof NumberLiteral) {
+        const leftIsNumber = unwrap(leftReduction.value) instanceof NumberLiteral
+        const rightIsNumber = unwrap(rightReduction.value) instanceof NumberLiteral
+        if (leftIsNumber && rightIsNumber) {
             const leftNumber = (unwrap(leftReduction.value) as NumberLiteral).value
             const rightNumber = (unwrap(rightReduction.value) as NumberLiteral).value
             const result = leftNumber + rightNumber
@@ -54,8 +57,8 @@ export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: Argu
                     ...(
                         node.operator === BinaryOperators.plusWithPositiveOperands
                             ? [
-                                ...(leftNumber <= 0 ? [{ node: leftReduction.value, findingMessage: `The left hand side of <...> should be a positive number.` }] : []),
-                                ...(rightNumber <= 0 ? [{ node: rightReduction.value, findingMessage: `The right hand side of <...> should be a positive number.` }] : [])
+                                ...(leftNumber <= 0 ? [{ node: leftReduction.value, findingMessage: `The left hand side of ${textRenderOf(intermediate)} should be a positive number.` }] : []),
+                                ...(rightNumber <= 0 ? [{ node: rightReduction.value, findingMessage: `The right hand side of ${textRenderOf(intermediate)} should be a positive number.` }] : [])
                             ]
                             : []
                     )
@@ -65,17 +68,15 @@ export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: Argu
         return {
             value: wrappedOriginalNode(node),
             findings: [
-                {
-                    node,
-                    findingMessage: `***can’t deal with this yet!***`
-                }
+                ...(leftIsNumber ? [] : [{ node: leftReduction.value, findingMessage: `The left hand side of ${textRenderOf(node)} should be a number.`}]),
+                ...(rightIsNumber ? [] : [{ node: rightReduction.value, findingMessage: `The right hand side of ${textRenderOf(node)} should be a number.`}])
             ]
         }
     }
 
     if (node instanceof FunctionInvocation) {
         const reduction = reduce(node.function!.value, [...nonLocalValues, ...node.bindings])
-        // TODO  check whether bindings are present for all arguments declared on the function
+        // TODO  check whether bindings match exactly with the arguments declared on the function
         return {
             value: reduction.value,
             findings: reduction.findings
