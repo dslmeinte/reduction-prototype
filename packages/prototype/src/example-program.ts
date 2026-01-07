@@ -12,9 +12,9 @@ import {
     binaryOperation,
     functionInvocation,
     numberLiteral,
-    originalId,
     stringLiteral
 } from "./factory.js"
+import { originalId } from "./ids.js"
 
 
 const foo = FunctionDeclaration.create(originalId())

@@ -12,9 +12,10 @@ import {
     WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
 import { isReducible } from "./gen/reducibles.g.js"
-import { binaryOperation, numberLiteral, transientId, withTrace, wrappedOriginalNode } from "./factory.js"
+import { binaryOperation, numberLiteral, withTrace, wrappedOriginalNode } from "./factory.js"
 import { unwrap } from "./functions.js"
 import { Reducer } from "./reduction.js"
+import { transientId } from "./ids.js"
 
 
 export const reduce: Reducer<Reducible> = (node: Reducible, nonLocalValues: ArgumentBinding[])=> {

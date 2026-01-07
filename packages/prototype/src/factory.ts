@@ -12,26 +12,17 @@ import {
     Value,
     WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
-import { LionWebId } from "@lionweb/json"
+import { IdProvider, isOriginal, originalId, transientId } from "./ids.js"
 
 
-export type IdProvider = () => LionWebId
-let previousId = 0  // (use one integer sequence to avoid confusion with duplicate numbers)
-const idProviderWith = (prefix: string) =>
-    () => `${prefix}${++previousId}`
-
-export const originalId = idProviderWith("id-")
-export const transientId = idProviderWith("transient-id-")
-
-
-export const argumentBinding = (argument: ArgumentDeclaration, value: Value, idProvider = originalId) => {
+export const argumentBinding = (argument: ArgumentDeclaration, value: Value, idProvider: IdProvider = originalId) => {
     const binding = ArgumentBinding.create(idProvider())
     binding.argument = argument
     binding.value = value
     return binding
 }
 
-export const binaryOperation = (operator: BinaryOperators, left: Value, right: Value, idProvider = originalId) => {
+export const binaryOperation = (operator: BinaryOperators, left: Value, right: Value, idProvider: IdProvider = originalId) => {
     const binaryOperation = BinaryOperation.create(idProvider())
     binaryOperation.operator = operator
     binaryOperation.left = left
@@ -39,7 +30,7 @@ export const binaryOperation = (operator: BinaryOperators, left: Value, right: V
     return binaryOperation
 }
 
-export const functionInvocation = (functionDeclaration: FunctionDeclaration, argumentBindings: ArgumentBinding[], idProvider = originalId) => {
+export const functionInvocation = (functionDeclaration: FunctionDeclaration, argumentBindings: ArgumentBinding[], idProvider: IdProvider = originalId) => {
     const invocation = FunctionInvocation.create(idProvider())
     invocation.function = functionDeclaration
     argumentBindings.forEach((binding) => {
@@ -48,13 +39,13 @@ export const functionInvocation = (functionDeclaration: FunctionDeclaration, arg
     return invocation
 }
 
-export const numberLiteral = (value: number, idProvider = originalId) => {
+export const numberLiteral = (value: number, idProvider: IdProvider = originalId) => {
     const node = NumberLiteral.create(idProvider())
     node.value = value
     return node
 }
 
-export const stringLiteral = (value: string, idProvider = originalId) => {
+export const stringLiteral = (value: string, idProvider: IdProvider = originalId) => {
     const node = StringLiteral.create(idProvider())
     node.value = value
     return node
@@ -70,6 +61,9 @@ export const withTrace = (resultNode: Reducible, reducedNode: Reducible) => {
 }
 
 export const wrappedOriginalNode = (originalNode: Reducible) => {
+    if (!isOriginal(originalNode)) {
+        throw new Error(`wrapping a transient node as original`)
+    }
     const wrappedOriginalNode = WrappedOriginalNode.create(transientId())
     wrappedOriginalNode.originalNode = originalNode
     return wrappedOriginalNode
