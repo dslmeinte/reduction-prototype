@@ -22,26 +22,26 @@ Program (id: id-18)
                         NumberLiteral (id: id-8)
                             value = 3
             name = "foo"
-        FunctionInvocation (id: id-10)
+        FunctionInvocation (id: id-11)
             function -> id-1
             bindings:
-                ArgumentBinding (id: id-11)
+                ArgumentBinding (id: id-10)
                     argument -> id-2
                     value:
                         NumberLiteral (id: id-9)
                             value = 1
-        FunctionInvocation (id: id-13)
+        FunctionInvocation (id: id-14)
             function -> id-1
             bindings:
-                ArgumentBinding (id: id-14)
+                ArgumentBinding (id: id-13)
                     argument -> id-2
                     value:
                         NumberLiteral (id: id-12)
                             value = -1
-        FunctionInvocation (id: id-16)
+        FunctionInvocation (id: id-17)
             function -> id-1
             bindings:
-                ArgumentBinding (id: id-17)
+                ArgumentBinding (id: id-16)
                     argument -> id-2
                     value:
                         StringLiteral (id: id-15)

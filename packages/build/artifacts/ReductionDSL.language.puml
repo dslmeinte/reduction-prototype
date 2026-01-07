@@ -30,14 +30,18 @@ class NumberLiteral implements Literal {
 
 class Parentheses implements Value
 
-class Program
+class Program implements Reducible
 
+interface Reducible
 interface Statement
 class StringLiteral implements Literal {
   value: String
 }
 
-interface Value
+annotation TraceAnnotation
+TraceAnnotation ..# Reducible : <i>annotates</i>
+
+interface Value extends Reducible, Statement
 
 
 ' relations:
@@ -59,6 +63,8 @@ Parentheses "1" o--> "1" Value: value
 Program "1" o--> "*" Statement: statements
 
 
+
+TraceAnnotation "*" --> "1" Reducible: reducedNode
 
 
 @enduml

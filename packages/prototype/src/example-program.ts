@@ -1,32 +1,15 @@
-import { asTreeTextWith } from "@lionweb/class-core"
-import { idOf } from "@lionweb/core"
-import { writeFileSync } from "fs"
-
 import {
-    ArgumentBinding,
     ArgumentDeclaration,
     ArgumentReference,
     BinaryOperation,
     BinaryOperators,
     FunctionDeclaration,
-    FunctionInvocation,
-    NumberLiteral,
     Parentheses,
     Program,
     StringLiteral,
     Value
 } from "./gen/ReductionDSL.g.js"
-
-
-let previousId = 0
-const id = () => `id-${++previousId}`
-
-
-const numberLiteral = (value: number) => {
-    const node = NumberLiteral.create(id())
-    node.value = value
-    return node
-}
+import { argumentBinding, functionInvocation, id, numberLiteral } from "./factory.js"
 
 
 const foo = FunctionDeclaration.create(id())
@@ -54,16 +37,8 @@ outerPlus.right = numberLiteral(3)
 foo.value = outerPlus
 
 
-const invokeFooWith = (value: Value) => {
-    const invocation = FunctionInvocation.create(id())
-    invocation.function = foo
-    const binding = ArgumentBinding.create(id())
-    binding.argument = argX
-    binding.value = value
-    invocation.addBindings(binding)
-    return invocation
-}
-
+const invokeFooWith = (value: Value) =>
+    functionInvocation(foo, argumentBinding(argX, value))
 
 const fooAt1 = invokeFooWith(numberLiteral(1))
 const fooAt_1 = invokeFooWith(numberLiteral(-1))
@@ -77,7 +52,4 @@ exampleProgram.addStatements(foo)
 exampleProgram.addStatements(fooAt1)
 exampleProgram.addStatements(fooAt_1)
 exampleProgram.addStatements(fooAtBar)
-
-
-writeFileSync("artifacts/example-program.txt", asTreeTextWith(idOf)([exampleProgram]))
 

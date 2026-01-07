@@ -18,8 +18,7 @@ echo ""
 
 echo "Testing package: prototype"
 cd prototype
-npm run build
-node dist/example-program.js
+npm test
 cd ..
 echo "...done"
 echo ""

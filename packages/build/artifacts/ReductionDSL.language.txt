@@ -44,9 +44,11 @@ language ReductionDSL
             features (↓name):
                 value: Value
 
-        concept Program
+        concept Program implements Reducible
             features (↓name):
                 statements: Statement[0..*]
+
+        interface Reducible
 
         interface Statement
 
@@ -54,6 +56,11 @@ language ReductionDSL
             features (↓name):
                 value: String
 
-        interface Value
+        annotation TraceAnnotation
+            annotates: Reducible
+            features (↓name):
+                reducedNode -> Reducible
+
+        interface Value extends Reducible, Statement
 
 
