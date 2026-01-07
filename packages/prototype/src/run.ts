@@ -17,12 +17,12 @@ const pathPostFixedWith  = (postFix: string) => join(artifactsPath, `${programNa
 writeFileSync(pathPostFixedWith(".tree.txt"), asTreeTextWith(idOf)([exampleProgram]))
 writeFileSync(pathPostFixedWith(".syntax.txt"), tracedTextRenderOf(exampleProgram))
 
-const fullReduction = reduce(exampleProgram, [])
-writeJsonAsFile(pathPostFixedWith(".reduction.json"), serializeNodeBases([fullReduction.value]))
-writeFileSync(pathPostFixedWith(".reduction.tree.txt"), asTreeTextWith(idOf)([fullReduction.value]))
-writeFileSync(pathPostFixedWith(".reduction.syntax.txt"), tracedTextRenderOf(fullReduction.value))
+const {value, findings} = reduce(exampleProgram, [])
+writeJsonAsFile(pathPostFixedWith(".reduction.json"), serializeNodeBases([value]))
+writeFileSync(pathPostFixedWith(".reduction.tree.txt"), asTreeTextWith(idOf)([value]))
+writeFileSync(pathPostFixedWith(".reduction.syntax.txt"), tracedTextRenderOf(value))
 writeFileSync(
     pathPostFixedWith(".findings.txt"),
-    asString(fullReduction.findings.map(verbalizationOf))
+    asString(findings.map(verbalizationOf))
 )
 
