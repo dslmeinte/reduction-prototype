@@ -8,7 +8,7 @@
     ],
     "nodes": [
         {
-            "id": "transient-id-45",
+            "id": "transient-id-1017",
             "classifier": {
                 "language": "ReductionDSL",
                 "version": "1",
@@ -23,9 +23,9 @@
                         "key": "ReductionDSL-Program-statements"
                     },
                     "children": [
-                        "transient-id-27",
-                        "transient-id-37",
-                        "transient-id-44"
+                        "transient-id-1005",
+                        "transient-id-1011",
+                        "transient-id-1016"
                     ]
                 }
             ],
@@ -34,7 +34,7 @@
             "parent": null
         },
         {
-            "id": "transient-id-27",
+            "id": "transient-id-1005",
             "classifier": {
                 "language": "ReductionDSL",
                 "version": "1",
@@ -53,12 +53,12 @@
             "containments": [],
             "references": [],
             "annotations": [
-                "transient-id-28"
+                "trace-id-1000004"
             ],
-            "parent": "transient-id-45"
+            "parent": "transient-id-1017"
         },
         {
-            "id": "transient-id-28",
+            "id": "trace-id-1000004",
             "classifier": {
                 "language": "ReductionDSL",
                 "version": "1",
@@ -76,16 +76,16 @@
                     "targets": [
                         {
                             "resolveInfo": null,
-                            "reference": "transient-id-26"
+                            "reference": "transient-id-1006"
                         }
                     ]
                 }
             ],
             "annotations": [],
-            "parent": "transient-id-27"
+            "parent": "transient-id-1005"
         },
         {
-            "id": "transient-id-37",
+            "id": "transient-id-1011",
             "classifier": {
                 "language": "ReductionDSL",
                 "version": "1",
@@ -104,12 +104,12 @@
             "containments": [],
             "references": [],
             "annotations": [
-                "transient-id-38"
+                "trace-id-1000008"
             ],
-            "parent": "transient-id-45"
+            "parent": "transient-id-1017"
         },
         {
-            "id": "transient-id-38",
+            "id": "trace-id-1000008",
             "classifier": {
                 "language": "ReductionDSL",
                 "version": "1",
@@ -127,16 +127,16 @@
                     "targets": [
                         {
                             "resolveInfo": null,
-                            "reference": "transient-id-36"
+                            "reference": "transient-id-1012"
                         }
                     ]
                 }
             ],
             "annotations": [],
-            "parent": "transient-id-37"
+            "parent": "transient-id-1011"
         },
         {
-            "id": "transient-id-44",
+            "id": "transient-id-1016",
             "classifier": {
                 "language": "ReductionDSL",
                 "version": "1",
@@ -154,13 +154,663 @@
                     "targets": [
                         {
                             "resolveInfo": null,
-                            "reference": "id-8"
+                            "reference": "id-7"
                         }
                     ]
                 }
             ],
             "annotations": [],
-            "parent": "transient-id-45"
+            "parent": "transient-id-1017"
+        },
+        {
+            "id": "transient-id-1003",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-BinaryOperation"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-operator"
+                    },
+                    "value": "ReductionDSL-BinaryOperators-plusWithPositiveOperands"
+                }
+            ],
+            "containments": [
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-left"
+                    },
+                    "children": [
+                        "transient-id-1001"
+                    ]
+                },
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-right"
+                    },
+                    "children": [
+                        "id-9"
+                    ]
+                }
+            ],
+            "references": [],
+            "annotations": [],
+            "parent": null
+        },
+        {
+            "id": "transient-id-1001",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-3"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1003"
+        },
+        {
+            "id": "id-9",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-NumberLiteral"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-NumberLiteral-value"
+                    },
+                    "value": "2"
+                }
+            ],
+            "containments": [],
+            "references": [],
+            "annotations": [
+                "trace-id-1000001"
+            ],
+            "parent": "transient-id-1003"
+        },
+        {
+            "id": "trace-id-1000001",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-2"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "id-9"
+        },
+        {
+            "id": "transient-id-1006",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-BinaryOperation"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-operator"
+                    },
+                    "value": "ReductionDSL-BinaryOperators-plus"
+                }
+            ],
+            "containments": [
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-left"
+                    },
+                    "children": [
+                        "transient-id-1002"
+                    ]
+                },
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-right"
+                    },
+                    "children": [
+                        "transient-id-1004"
+                    ]
+                }
+            ],
+            "references": [],
+            "annotations": [],
+            "parent": null
+        },
+        {
+            "id": "transient-id-1002",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-NumberLiteral"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-NumberLiteral-value"
+                    },
+                    "value": "3"
+                }
+            ],
+            "containments": [],
+            "references": [],
+            "annotations": [
+                "trace-id-1000002",
+                "trace-id-1000003"
+            ],
+            "parent": "transient-id-1006"
+        },
+        {
+            "id": "trace-id-1000002",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "transient-id-1003"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1002"
+        },
+        {
+            "id": "trace-id-1000003",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-5"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1002"
+        },
+        {
+            "id": "transient-id-1004",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-6"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1006"
+        },
+        {
+            "id": "transient-id-1009",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-BinaryOperation"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-operator"
+                    },
+                    "value": "ReductionDSL-BinaryOperators-plusWithPositiveOperands"
+                }
+            ],
+            "containments": [
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-left"
+                    },
+                    "children": [
+                        "transient-id-1007"
+                    ]
+                },
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-right"
+                    },
+                    "children": [
+                        "id-12"
+                    ]
+                }
+            ],
+            "references": [],
+            "annotations": [],
+            "parent": null
+        },
+        {
+            "id": "transient-id-1007",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-3"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1009"
+        },
+        {
+            "id": "id-12",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-NumberLiteral"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-NumberLiteral-value"
+                    },
+                    "value": "-1"
+                }
+            ],
+            "containments": [],
+            "references": [],
+            "annotations": [
+                "trace-id-1000005"
+            ],
+            "parent": "transient-id-1009"
+        },
+        {
+            "id": "trace-id-1000005",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-2"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "id-12"
+        },
+        {
+            "id": "transient-id-1012",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-BinaryOperation"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-operator"
+                    },
+                    "value": "ReductionDSL-BinaryOperators-plus"
+                }
+            ],
+            "containments": [
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-left"
+                    },
+                    "children": [
+                        "transient-id-1008"
+                    ]
+                },
+                {
+                    "containment": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-BinaryOperation-right"
+                    },
+                    "children": [
+                        "transient-id-1010"
+                    ]
+                }
+            ],
+            "references": [],
+            "annotations": [],
+            "parent": null
+        },
+        {
+            "id": "transient-id-1008",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-NumberLiteral"
+            },
+            "properties": [
+                {
+                    "property": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-NumberLiteral-value"
+                    },
+                    "value": "0"
+                }
+            ],
+            "containments": [],
+            "references": [],
+            "annotations": [
+                "trace-id-1000006",
+                "trace-id-1000007"
+            ],
+            "parent": "transient-id-1012"
+        },
+        {
+            "id": "trace-id-1000006",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "transient-id-1009"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1008"
+        },
+        {
+            "id": "trace-id-1000007",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-5"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1008"
+        },
+        {
+            "id": "transient-id-1010",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-6"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1012"
+        },
+        {
+            "id": "transient-id-1013",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-3"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": null
+        },
+        {
+            "id": "transient-id-1014",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-4"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                "trace-id-1000010"
+            ],
+            "parent": null
+        },
+        {
+            "id": "trace-id-1000010",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-TraceAnnotation"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-TraceAnnotation-reducedNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-5"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": "transient-id-1014"
+        },
+        {
+            "id": "transient-id-1015",
+            "classifier": {
+                "language": "ReductionDSL",
+                "version": "1",
+                "key": "ReductionDSL-WrappedOriginalNode"
+            },
+            "properties": [],
+            "containments": [],
+            "references": [
+                {
+                    "reference": {
+                        "language": "ReductionDSL",
+                        "version": "1",
+                        "key": "ReductionDSL-WrappedOriginalNode-originalNode"
+                    },
+                    "targets": [
+                        {
+                            "resolveInfo": null,
+                            "reference": "id-6"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [],
+            "parent": null
         }
     ]
 }

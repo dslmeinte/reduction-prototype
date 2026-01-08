@@ -1,48 +1,48 @@
 Program (id: id-18)
     statements:
-        FunctionDeclaration (id: id-1)
+        FunctionDeclaration (id: id-8)
             arguments:
-                ArgumentDeclaration (id: id-2)
+                ArgumentDeclaration (id: id-1)
                     name = "X"
             value:
-                BinaryOperation (id: id-8)
+                BinaryOperation (id: id-7)
                     operator = ReductionDSL-BinaryOperators-plus
                     left:
-                        Parentheses (id: id-6)
+                        Parentheses (id: id-5)
                             inner:
-                                BinaryOperation (id: id-5)
+                                BinaryOperation (id: id-4)
                                     operator = ReductionDSL-BinaryOperators-plusWithPositiveOperands
                                     left:
-                                        NumberLiteral (id: id-4)
+                                        NumberLiteral (id: id-3)
                                             value = 1
                                     right:
-                                        ArgumentReference (id: id-3)
-                                            argument -> id-2
+                                        ArgumentReference (id: id-2)
+                                            argument -> id-1
                     right:
-                        NumberLiteral (id: id-7)
+                        NumberLiteral (id: id-6)
                             value = 3
             name = "foo"
         FunctionInvocation (id: id-11)
-            function -> id-1
+            function -> id-8
             bindings:
                 ArgumentBinding (id: id-10)
-                    argument -> id-2
+                    argument -> id-1
                     value:
                         NumberLiteral (id: id-9)
                             value = 2
         FunctionInvocation (id: id-14)
-            function -> id-1
+            function -> id-8
             bindings:
                 ArgumentBinding (id: id-13)
-                    argument -> id-2
+                    argument -> id-1
                     value:
                         NumberLiteral (id: id-12)
                             value = -1
         FunctionInvocation (id: id-17)
-            function -> id-1
+            function -> id-8
             bindings:
                 ArgumentBinding (id: id-16)
-                    argument -> id-2
+                    argument -> id-1
                     value:
                         StringLiteral (id: id-15)
                             value = "bar"

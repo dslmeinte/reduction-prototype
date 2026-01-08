@@ -1,14 +1,87 @@
-Program (id: transient-id-45)
+Program (id: transient-id-1017)
     statements:
-        NumberLiteral (id: transient-id-27)
+        NumberLiteral (id: transient-id-1005)
             value = 6
-            @ TraceAnnotation (id: transient-id-28)
-                reducedNode -> transient-id-26
+            @ TraceAnnotation (id: trace-id-1000004)
+                reducedNode -> transient-id-1006
 
-        NumberLiteral (id: transient-id-37)
+        NumberLiteral (id: transient-id-1011)
             value = 3
-            @ TraceAnnotation (id: transient-id-38)
-                reducedNode -> transient-id-36
+            @ TraceAnnotation (id: trace-id-1000008)
+                reducedNode -> transient-id-1012
 
-        WrappedOriginalNode (id: transient-id-44)
-            originalNode -> id-8
+        WrappedOriginalNode (id: transient-id-1016)
+            originalNode -> id-7
+BinaryOperation (id: transient-id-1003)
+    operator = ReductionDSL-BinaryOperators-plusWithPositiveOperands
+    left:
+        WrappedOriginalNode (id: transient-id-1001)
+            originalNode -> id-3
+    right:
+        NumberLiteral (id: id-9)
+            value = 2
+            @ TraceAnnotation (id: trace-id-1000001)
+                reducedNode -> id-2
+
+BinaryOperation (id: transient-id-1006)
+    operator = ReductionDSL-BinaryOperators-plus
+    left:
+        NumberLiteral (id: transient-id-1002)
+            value = 3
+            @ TraceAnnotation (id: trace-id-1000002)
+                reducedNode -> transient-id-1003
+
+            @ TraceAnnotation (id: trace-id-1000003)
+                reducedNode -> id-5
+
+    right:
+        WrappedOriginalNode (id: transient-id-1004)
+            originalNode -> id-6
+BinaryOperation (id: transient-id-1009)
+    operator = ReductionDSL-BinaryOperators-plusWithPositiveOperands
+    left:
+        WrappedOriginalNode (id: transient-id-1007)
+            originalNode -> id-3
+    right:
+        NumberLiteral (id: id-12)
+            value = -1
+            @ TraceAnnotation (id: trace-id-1000005)
+                reducedNode -> id-2
+
+BinaryOperation (id: transient-id-1012)
+    operator = ReductionDSL-BinaryOperators-plus
+    left:
+        NumberLiteral (id: transient-id-1008)
+            value = 0
+            @ TraceAnnotation (id: trace-id-1000006)
+                reducedNode -> transient-id-1009
+
+            @ TraceAnnotation (id: trace-id-1000007)
+                reducedNode -> id-5
+
+    right:
+        WrappedOriginalNode (id: transient-id-1010)
+            originalNode -> id-6
+WrappedOriginalNode (id: transient-id-1013)
+    originalNode -> id-3
+WrappedOriginalNode (id: transient-id-1014)
+    originalNode -> id-4
+    @ TraceAnnotation (id: trace-id-1000010)
+        reducedNode -> id-5
+
+WrappedOriginalNode (id: transient-id-1015)
+    originalNode -> id-6
+Program (id: transient-id-1017)
+    statements:
+        NumberLiteral (id: transient-id-1005)
+            value = 6
+            @ TraceAnnotation (id: trace-id-1000004)
+                reducedNode -> transient-id-1006
+
+        NumberLiteral (id: transient-id-1011)
+            value = 3
+            @ TraceAnnotation (id: trace-id-1000008)
+                reducedNode -> transient-id-1012
+
+        WrappedOriginalNode (id: transient-id-1016)
+            originalNode -> id-7

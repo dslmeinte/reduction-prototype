@@ -1,39 +1,28 @@
-import {
-    ArgumentDeclaration,
-    ArgumentReference,
-    BinaryOperators,
-    FunctionDeclaration,
-    Parentheses,
-    Program,
-    Value
-} from "./gen/ReductionDSL.g.js"
-import {
+import { BinaryOperators, Value } from "./gen/ReductionDSL.g.js"
+import { originalNodeFactory } from "./factory.js"
+
+const {
     argumentBinding,
+    argumentDeclaration,
+    argumentReference,
     binaryOperation,
+    functionDeclaration,
     functionInvocation,
     numberLiteral,
+    parentheses,
+    program,
     stringLiteral
-} from "./factory.js"
-import { originalId } from "./ids.js"
+} = originalNodeFactory
 
 
-const foo = FunctionDeclaration.create(originalId())
-foo.name = "foo"
-const argX = ArgumentDeclaration.create(originalId())
-argX.name = "X"
-foo.addArguments(argX)
+const argX = argumentDeclaration("X")
 
-const refX = ArgumentReference.create(originalId())
-refX.argument = argX
-
+const refX = argumentReference(argX)
 const innerPlus = binaryOperation(BinaryOperators.plusWithPositiveOperands, numberLiteral(1), refX)
+const parens = parentheses(innerPlus)
+const outerPlus = binaryOperation(BinaryOperators.plus, parens, numberLiteral(3))
 
-const parentheses = Parentheses.create(originalId())
-parentheses.inner = innerPlus
-
-const outerPlus = binaryOperation(BinaryOperators.plus, parentheses, numberLiteral(3))
-
-foo.value = outerPlus
+const foo = functionDeclaration("foo", outerPlus, argX)
 
 
 const invokeFooWith = (value: Value) =>
@@ -44,9 +33,10 @@ const fooAt_1 = invokeFooWith(numberLiteral(-1))
 const fooAtBar = invokeFooWith(stringLiteral("bar"))
 
 
-export const exampleProgram = Program.create(originalId())
-exampleProgram.addStatements(foo)
-exampleProgram.addStatements(fooAt2)
-exampleProgram.addStatements(fooAt_1)
-exampleProgram.addStatements(fooAtBar)
+export const exampleProgram = program(
+    foo,
+    fooAt2,
+    fooAt_1,
+    fooAtBar
+)
 

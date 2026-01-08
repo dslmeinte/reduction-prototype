@@ -6,7 +6,8 @@ import { asString } from "littoral-templates"
 import { join } from "path"
 
 import { exampleProgram } from "./example-program.js"
-import { reduce } from "./reducer.js"
+import { transientNodeFactory } from "./factory.js"
+import { reduceUsing } from "./reducer.js"
 import { verbalizationOf } from "./reduction.js"
 import { tracedTextRenderOf } from "./renderer.js"
 
@@ -17,9 +18,15 @@ const pathPostFixedWith  = (postFix: string) => join(artifactsPath, `${programNa
 writeFileSync(pathPostFixedWith(".tree.txt"), asTreeTextWith(idOf)([exampleProgram]))
 writeFileSync(pathPostFixedWith(".syntax.txt"), tracedTextRenderOf(exampleProgram))
 
+const transientsFactory = transientNodeFactory()
+const reduce = reduceUsing(transientsFactory)
 const {value, findings} = reduce(exampleProgram, [])
-writeJsonAsFile(pathPostFixedWith(".reduction.json"), serializeNodeBases([value]))
-writeFileSync(pathPostFixedWith(".reduction.tree.txt"), asTreeTextWith(idOf)([value]))
+const allRootsOfFullReduction = [
+    value,
+    ...transientsFactory.instantiations.filter((transientNode) => transientNode.parent === undefined)
+]
+writeJsonAsFile(pathPostFixedWith(".reduction.json"), serializeNodeBases(allRootsOfFullReduction))
+writeFileSync(pathPostFixedWith(".reduction.tree.txt"), asTreeTextWith(idOf)(allRootsOfFullReduction))
 writeFileSync(pathPostFixedWith(".reduction.syntax.txt"), tracedTextRenderOf(value))
 writeFileSync(
     pathPostFixedWith(".findings.txt"),
