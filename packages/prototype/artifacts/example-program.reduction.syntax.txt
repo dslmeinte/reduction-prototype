@@ -1,4 +1,10 @@
-program:
-    [6 {= reduction of: [3 {= reduction of: <1> ⊕ [2 {= reduction of: ref<X>}]}] + <3>}]
-    [3 {= reduction of: [0 {= reduction of: <1> ⊕ [-1 {= reduction of: ref<X>}]}] + <3>}]
-    <(1 ⊕ ref<X>) + 3>
+[program:
+    [6 {= reduction of: [3 {= reduction of: 1 ⊕ [2 {= reduction of: ref<X>}]}] + 3}]
+    [3 {= reduction of: [0 {= reduction of: 1 ⊕ [-1 {= reduction of: ref<X>}]}] + 3}]
+    [[1 ⊕ ["bar" {= reduction of: ref<X>}] {= reduction of: 1 ⊕ ref<X>}] + 3 {= reduction of: (1 ⊕ ref<X>) + 3}]
+ {= reduction of: program:
+    function foo(X) ⇒ (1 ⊕ ref<X>) + 3
+    foo(X = 2)
+    foo(X = -1)
+    foo(X = "bar")
+}]

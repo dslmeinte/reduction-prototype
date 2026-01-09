@@ -17,21 +17,31 @@ import {
     Value,
     WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
-import { IdProvider, isOriginal, originalId, traceId, transientId } from "./ids.js"
+import { IdProvider, isTransient, originalId, traceId, transientId } from "./ids.js"
 
 
+/**
+ * A factory to instantiate nodes with classifiers in the Reduction DSL,
+ * that is parametrized by a {@link IdProvider}, and keeps track of the nodes it instantiated.
+ *
+ */
 export class NodeFactory {
 
     constructor(private readonly idProvider: IdProvider) {
     }
 
+
     private readonly _instantiations: INodeBase[] = []
     private register(node: INodeBase) {
         this._instantiations.push(node)
     }
+    /**
+     * @return all the nodes **this** factory instantiated.
+     */
     get instantiations() {
         return this._instantiations.slice()
     }
+
 
     argumentBinding = (argument: ArgumentDeclaration, value: Value) => {
         const node = ArgumentBinding.create(this.idProvider())
@@ -115,12 +125,16 @@ export class NodeFactory {
         return node
     }
 
+    /**
+     * @return a {@link WrappedOriginalNode wrapped version} of the given original {@link Reducible reducible} {@link INodeBase node}.
+     * Note that it’s checked that the ID provider is a transient ID provider, and that `originalNode` really is an original node.
+     */
     wrappedOriginalNode = (originalNode: Reducible) => {
-        if (!isOriginal(originalNode)) {
-            throw new Error(`trying to wrap a transient node as original`)
-        }
         if (this.idProvider !== transientId) {
             throw new Error(`trying to wrap a node as original node`)
+        }
+        if (isTransient(originalNode)) {
+            throw new Error(`trying to wrap a transient node as original`)
         }
         const node = WrappedOriginalNode.create(transientId())   // (force returning a transient node)
         node.originalNode = originalNode
@@ -131,13 +145,28 @@ export class NodeFactory {
 }
 
 
-export const originalNodeFactory = new NodeFactory(originalId)
+/**
+ * @return a new node factory for original nodes.
+ */
+export const originalNodeFactory = () => new NodeFactory(originalId)
+/**
+ * @return a new node factory for transient nodes.
+ */
 export const transientNodeFactory = () => new NodeFactory(transientId)
 
 
+/**
+ * @return the given `resultNode` with an annotation referencing the given `reducedNode`.
+ */
 export const withTrace = (resultNode: Reducible, reducedNode: Reducible) => {
+    if (!isTransient(resultNode)) {
+        throw new Error(`can only add trace annotations to transient nodes, not to a node with ID "${resultNode.id}" `)
+    }
     const traceAnnotation = TraceAnnotation.create(traceId())
     traceAnnotation.reducedNode = reducedNode
+    if (resultNode.annotations.some((annotation) => annotation instanceof TraceAnnotation)) {
+        console.log(`[WARN] adding trace annotation (with ID "${traceAnnotation.id}") to node with ID "${resultNode.id}" that already has trace annotations`)
+    }
     resultNode.addAnnotation(traceAnnotation)
     return resultNode
 }

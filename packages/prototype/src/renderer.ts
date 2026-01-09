@@ -19,6 +19,12 @@ import {
 import { traceAnnotationOf } from "./functions.js"
 
 
+const indent = indentWith("    ")(1)
+
+
+export type TextRenderer = (node: INodeBase) => string
+
+
 const operatorToSymbol = (operator: BinaryOperators): string => {
     switch (operator) {
         case BinaryOperators.plus: return "+"
@@ -26,11 +32,10 @@ const operatorToSymbol = (operator: BinaryOperators): string => {
     }
 }
 
-const indent = indentWith("    ")(1)
 
-
-export type TextRenderer = (node: INodeBase) => string
-
+/**
+ * @return a textual rendering of the given {@link INodeBase node}, *without* any tracing information.
+ */
 export const textRenderOf: TextRenderer = (node) => {
 
     if (node instanceof ArgumentBinding) {
@@ -85,6 +90,10 @@ export const textRenderOf: TextRenderer = (node) => {
 }
 
 
+/**
+ * @return a textual rendering of the given {@link INodeBase node}, *with* tracing information.
+ * (In case a node has multiple {@link TraceAnnotation trace annotations} on it, only the first is shown.)
+ */
 export const tracedTextRenderOf = (node: INodeBase): string => {
 
     const internalRenderOf = (node: INodeBase): string => {
@@ -132,7 +141,7 @@ export const tracedTextRenderOf = (node: INodeBase): string => {
         }
 
         if (node instanceof WrappedOriginalNode) {
-            return `<${isRef(node.originalNode) ? tracedTextRenderOf(node.originalNode) : "<unresolved original node>"}>`
+            return `${isRef(node.originalNode) ? tracedTextRenderOf(node.originalNode) : "<unresolved original node>"}`
         }
 
         throw new Error(`couldn’t render instance of ${node.classifier.name} as text: not implemented`)

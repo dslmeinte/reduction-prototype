@@ -29,7 +29,7 @@ language ReductionDSL
                 arguments: ArgumentDeclaration[0..*]
                 value: Value
 
-        concept FunctionInvocation implements Statement, Value
+        concept FunctionInvocation implements Value
             features (↓name):
                 bindings: ArgumentBinding[0..*]
                 function -> FunctionDeclaration
@@ -44,7 +44,7 @@ language ReductionDSL
             features (↓name):
                 inner: Value
 
-        concept Program implements Reducible
+        <<partition>> concept Program implements Reducible
             features (↓name):
                 statements: Statement[0..*]
 

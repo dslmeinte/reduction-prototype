@@ -1,0 +1,2 @@
+on node with ID "id-12": The right hand side of 1 ⊕ -1 should be a positive number. -1 is the result of evaluating ref<X> with X = 2.
+on node with ID "transient-id-1014": The right hand side of 1 ⊕ "bar" should be a number. "bar" is the result of evaluating ref<X> with X = "bar".

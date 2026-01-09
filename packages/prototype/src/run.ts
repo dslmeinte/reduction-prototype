@@ -1,6 +1,5 @@
-import { asTreeTextWith, serializeNodeBases } from "@lionweb/class-core"
+import { asTreeTextWith } from "@lionweb/class-core"
 import { idOf } from "@lionweb/core"
-import { writeJsonAsFile } from "@lionweb/utilities"
 import { writeFileSync } from "fs"
 import { asString } from "littoral-templates"
 import { join } from "path"
@@ -21,12 +20,11 @@ writeFileSync(pathPostFixedWith(".syntax.txt"), tracedTextRenderOf(exampleProgra
 const transientsFactory = transientNodeFactory()
 const reduce = reduceUsing(transientsFactory)
 const {value, findings} = reduce(exampleProgram, [])
-const allRootsOfFullReduction = [
+const allRoots = [
     value,
     ...transientsFactory.instantiations.filter((transientNode) => transientNode.parent === undefined)
 ]
-writeJsonAsFile(pathPostFixedWith(".reduction.json"), serializeNodeBases(allRootsOfFullReduction))
-writeFileSync(pathPostFixedWith(".reduction.tree.txt"), asTreeTextWith(idOf)(allRootsOfFullReduction))
+writeFileSync(pathPostFixedWith(".reduction.tree.txt"), asTreeTextWith(idOf)(allRoots))
 writeFileSync(pathPostFixedWith(".reduction.syntax.txt"), tracedTextRenderOf(value))
 writeFileSync(
     pathPostFixedWith(".findings.txt"),

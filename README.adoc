@@ -1,0 +1,137 @@
+= Reduction prototype
+
+This prototype demonstrates the mechanism of *reduction* of an AST with semantics.
+This means that the AST is reduced, starting with the leaf nodes, and going up the tree, in bottom-up fashion.
+Each node is reduced _exactly once_ to a reduction, using the reductions of its children.
+A reduction encompasses “the evaluated value of a node as a result of “running” the whole AST against its semantics”, but could include findings arising from validation, and/or type computation as well.
+(Type computation of a node is typically made easier when the node has a reduction.)
+
+The prototype works with a test DSL: the Reduction DSL, which is described in more detail below.
+
+
+== The Reduction DSL
+
+This is a test DSL that’s the subject of the reduction prototype.
+It’s small – 11 concepts, 4 interfaces, 1 enumeration, and 1 annotation – but aims to be just large enough to be able to express a couple of “interesting” situations w.r.t. the reduction mechanism in.
+
+****
+Concept names are rendered in `fixed-width font`.
+****
+
+Data points:
+
+* Any concept for nodes that are reducible is tagged with the `Reducible` interface.
+Only 3 concepts don’t implement this interface: `FunctionDeclaration`, `ArgumentDeclaration`, and `ArgumentBinding`.
+
+* The `Value` interface is implemented by anything that’s deemed to have a value.
+(Typically, this interface is named `Expression`.)
+
+* The AST starts at a node with the reducible `Program` concept.
+A program consists of statements (being tagged with the `Statement` interface), which is either a `Value` or a `FunctionDeclaration`.
+
+* No classifiers associated with types exist.
+This was done on purpose, because typing is not really that interesting – yet? – for this prototype.
+
+* The `plusWithPositiveOperands` binary operator – denoted with “⊕” – is atypical: it’s the regular arithmetic plus operator, with the added constraint that both its operands should be – i.e.: reduce to – positive numbers.
+This is used to mimic the real-life use case that prompted this prototype.
+
+* A `FunctionDeclaration` instance declares 0 or more `ArgumentDeclaration` instances.
+An `ArgumentDeclaration` instance only has a name, and not a declared type — (see also previous point).
+
+* A `WrappedOriginalNode` instance wraps a node from the original, unreduced AST, as a reference.
+The value part of a reduction is rendered as a _transient_ node.
+Any node can have only one parent, so simply re-using an original node as a child of a transient node would move that out of the original AST, which is undesirable.
+The original AST shouldn’t contain `WrappedOriginalNode` instances.
+
+* The `Literal` interface extends `Value`, and has `NumberLiteral` and `StringLiteral` as concrete sub types.
+
+* The `TraceAnnotation` is used to trace a transient node to its original node.
+
+* The remainder of the DSL is extremely standard, including naming.
+
+* A textual syntax for the DSL is provided for presentational convenience.
+The renderer for this syntax can also express tracing information.
+
+[plantuml, svg]
+.A diagram of the DSL’s meta-model (as PlantUML class diagram)
+----
+!include packages/build/artifacts/ReductionDSL.language.puml
+----
+
+A – potentially more informative – rendering of the DSL’s meta-model is also available in a textual format: link:packages/build/artifacts/ReductionDSL.language.txt[].
+
+
+== The reduction mechanism
+
+Each original node – i.e.: node in the original AST to reduce – is reduced exactly once, to (at least) a value — a transient node.
+Not every reduction value is a literal: it could be a _partial evaluation_ of the original node, especially in cases where no sensible reduction exists.
+
+A prime example of that is the expression “1 + "bar"”: this should trigger a type error, but it’s likely erroneous to afford this expression the value of “1”.
+On the other hand, the expression “1 ⊕ -1” should trigger the constraint validation for the ⊕ operator, but it’d be perfectly alright to afford this expression the value of “0”.
+(Other examples would be evaluating the square root of -1, or an `ArgumentReference` for which the corresponding binding is missing — e.g. through an incomplete `FunctionInvocation`.)
+
+The implemented reducer combines evaluation and validation.
+That’s convenient because the validation traverses the AST in the same way, _and_ benefits from having information at hand that’s produced during evaluation; specifically: non-local values (which would otherwise have to be looked up by inspecting call sites!), and evaluations of children.
+
+
+== Repo organization
+
+This project is split into 2:
+
+* The `build` package defines the Reduction DSL as a LionWeb language, triggers the `class-core-generator` on it, and generates some additional reflective code to determine whether a given node is reducible.
+All this is done through running this package’s `generate` NPM task.
+
+* The `prototype` package contains the generated code, the implementation of the reduction in the form of a _reducer_, and a “main program” that runs the reducer on an example program.
+This main program is run through this package’s `test` NPM task.
+
+
+== Implementation
+
+The `prototype` package contains the following files (apart from the usual license, NPM, and TypeScript ones):
+
+* `artifacts/`: contains various non-source artifacts.
+* `src/`: contains all sources — all exposed code has JSDoc!
+** `gen/`:
+*** `reducibles.g.ts`: exposes a `isReducible` type guard for the `Reducible` interface.
+*** `ReductionDSL.g.ts`: implements the DSL, as generated by the `class-core-generator`.
+** `example-program.ts`: constructs the example program’s AST — see below.
+** `factory.ts`: exposes `originalNodeFactory` and `transientNodeFactory` functions that return instances of the `NodeFactory` class, and a `withTrace` function to add a `TraceAnnotation` instance to a transient node (as the result value of a reduction) to another node.
+** `functions.ts`: exposes an `unwrap` function to unwrap the original node from a `WrappedOriginalNode` instance, and a `traceAnnotationOf` function to try and get the first `TraceAnnotation` from a given node.
+** `ids.ts`: contains various functions (and a type) relating to ID generation.
+** `reducer.ts`: contains the actual reducer.
+** `reduction.ts`: contains types defining the reductions.
+** `renderer.ts`: exposes `textRenderOf` and `tracedTextRenderOf` functions that render the textual syntax of DSL contents, without or with tracing information, respectively.
+** `run.ts`: reduces the example program, and persisting the corresponding artifacts.
+
+=== Reducer
+
+A reducer – which is an instance of the `Reducer` type in `reducer.ts` – takes an _original_ node, and an array of _non-local values_ which are ``ArgumentBinding``s, and returns a reduction of that original node.
+That reduction consists of:
+
+* A transient node that’s the evaluation’s result.
+* An array of findings that are the result of validating the original node.
+
+
+== The example program
+
+This looks as follows, in the textual syntax for this DSL:
+
+```
+include::packages/prototype/artifacts/example-program.syntax.txt[]
+```
+
+It is _expected_ to reduce to the following, including tracing information:
+
+```
+include::packages/prototype/artifacts/example-program.reduction.syntax.expected.txt[]
+```
+
+The corresponding findings are _expected_ to be produced:
+
+```
+include::packages/prototype/artifacts/example-program.findings.expected.txt[]
+```
+
+(The node IDs here are generated sequentially, so might differ, and are not important anyway.)
+*Currently, these expectations are not met _yet_.*
+

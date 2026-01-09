@@ -211,7 +211,7 @@ export class ReductionDSLBase implements ILanguageBase {
         return this._ArgumentReference_argument;
     }
 
-    public readonly _Program = new Concept(this._language, "Program", "ReductionDSL-Program", "ReductionDSL-Program", false);
+    public readonly _Program = new Concept(this._language, "Program", "ReductionDSL-Program", "ReductionDSL-Program", false).isPartition();
     get Program(): Concept {
         this.ensureWiredUp();
         return this._Program;
@@ -252,7 +252,7 @@ export class ReductionDSLBase implements ILanguageBase {
         this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._Parentheses, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._WrappedOriginalNode, this._TraceAnnotation);
         this._Value.extending(this._Reducible, this._Statement);
         this._ArgumentDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed);
-        this._FunctionDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed, this._Statement);
+        this._FunctionDeclaration.implementing(this._Statement, LionCore_builtinsBase.INSTANCE._INamed);
         this._FunctionDeclaration.havingFeatures(this._FunctionDeclaration_arguments, this._FunctionDeclaration_value);
         this._FunctionDeclaration_arguments.ofType(this._ArgumentDeclaration);
         this._FunctionDeclaration_value.ofType(this._Value);
@@ -275,7 +275,7 @@ export class ReductionDSLBase implements ILanguageBase {
         this._ArgumentBinding.havingFeatures(this._ArgumentBinding_argument, this._ArgumentBinding_value);
         this._ArgumentBinding_argument.ofType(this._ArgumentDeclaration);
         this._ArgumentBinding_value.ofType(this._Value);
-        this._FunctionInvocation.implementing(this._Value, this._Statement);
+        this._FunctionInvocation.implementing(this._Value);
         this._FunctionInvocation.havingFeatures(this._FunctionInvocation_function, this._FunctionInvocation_bindings);
         this._FunctionInvocation_function.ofType(this._FunctionDeclaration);
         this._FunctionInvocation_bindings.ofType(this._ArgumentBinding);
@@ -623,7 +623,7 @@ export class ArgumentBinding extends NodeBase {
     }
 }
 
-export class FunctionInvocation extends NodeBase implements Statement, Value {
+export class FunctionInvocation extends NodeBase implements Value {
     static create(id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage): FunctionInvocation {
         return new FunctionInvocation(ReductionDSLBase.INSTANCE.FunctionInvocation, id, receiveDelta, parentInfo);
     }

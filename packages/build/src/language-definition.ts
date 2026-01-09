@@ -17,7 +17,7 @@ const Value = factory.interface("Value").extending(Reducible, Statement)
 
 const ArgumentDeclaration = factory.concept("ArgumentDeclaration", false).implementing(inamed)
 
-const FunctionDeclaration = factory.concept("FunctionDeclaration", false).implementing(inamed, Statement)
+const FunctionDeclaration = factory.concept("FunctionDeclaration", false).implementing(Statement, inamed)
 factory.containment(FunctionDeclaration, "arguments").ofType(ArgumentDeclaration).isOptional().isMultiple()
 factory.containment(FunctionDeclaration, "value").ofType(Value)
 
@@ -46,7 +46,7 @@ const ArgumentBinding = factory.concept("ArgumentBinding", false)
 factory.reference(ArgumentBinding, "argument").ofType(ArgumentDeclaration)
 factory.containment(ArgumentBinding, "value").ofType(Value)
 
-const FunctionInvocation = factory.concept("FunctionInvocation", false).implementing(Value, Statement)
+const FunctionInvocation = factory.concept("FunctionInvocation", false).implementing(Value)
 factory.reference(FunctionInvocation, "function").ofType(FunctionDeclaration)
 factory.containment(FunctionInvocation, "bindings").ofType(ArgumentBinding).isOptional().isMultiple()
 
@@ -54,7 +54,7 @@ const ArgumentReference = factory.concept("ArgumentReference", false).implementi
 factory.reference(ArgumentReference, "argument").ofType(ArgumentDeclaration)
 
 
-const Program = factory.concept("Program", false).implementing(Reducible)
+const Program = factory.concept("Program", false).isPartition().implementing(Reducible)
 factory.containment(Program, "statements").ofType(Statement).isOptional().isMultiple()
 
 // wraps an original node, so we can re-use that node as a child of a transient node, without moving the original node:
