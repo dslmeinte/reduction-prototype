@@ -16,6 +16,7 @@ import {
     EnumerationLiteral,
     Interface,
     Language,
+    MultiRef,
     Property,
     Reference,
     SingleRef
@@ -35,6 +36,7 @@ import {
     NodeBase,
     NodeBaseFactory,
     OptionalMultiContainmentValueManager,
+    OptionalMultiReferenceValueManager,
     Parentage,
     PropertyValueManager,
     ReferenceValueManager,
@@ -243,6 +245,11 @@ export class ReductionDSLBase implements ILanguageBase {
         this.ensureWiredUp();
         return this._TraceAnnotation_reducedNode;
     }
+    private readonly _TraceAnnotation_relevantBindings = new Reference(this._TraceAnnotation, "relevantBindings", "ReductionDSL-TraceAnnotation-relevantBindings", "ReductionDSL-TraceAnnotation-relevantBindings").isOptional().isMultiple();
+    get TraceAnnotation_relevantBindings(): Reference {
+        this.ensureWiredUp();
+        return this._TraceAnnotation_relevantBindings;
+    }
 
     private _wiredUp: boolean = false;
     private ensureWiredUp() {
@@ -288,8 +295,9 @@ export class ReductionDSLBase implements ILanguageBase {
         this._WrappedOriginalNode.implementing(this._Reducible);
         this._WrappedOriginalNode.havingFeatures(this._WrappedOriginalNode_originalNode);
         this._WrappedOriginalNode_originalNode.ofType(this._Reducible);
-        this._TraceAnnotation.havingFeatures(this._TraceAnnotation_reducedNode);
+        this._TraceAnnotation.havingFeatures(this._TraceAnnotation_reducedNode, this._TraceAnnotation_relevantBindings);
         this._TraceAnnotation_reducedNode.ofType(this._Reducible);
+        this._TraceAnnotation_relevantBindings.ofType(this._ArgumentBinding);
         this._wiredUp = true;
     }
 
@@ -780,16 +788,35 @@ export class TraceAnnotation extends NodeBase {
         this._reducedNode.set(newValue);
     }
 
+    private readonly _relevantBindings: OptionalMultiReferenceValueManager<ArgumentBinding>;
+    get relevantBindings(): MultiRef<ArgumentBinding> {
+        return this._relevantBindings.get();
+    }
+    addRelevantBindings(newValue: ArgumentBinding) {
+        this._relevantBindings.add(newValue);
+    }
+    removeRelevantBindings(valueToRemove: ArgumentBinding) {
+        this._relevantBindings.remove(valueToRemove);
+    }
+    addRelevantBindingsAtIndex(newValue: ArgumentBinding, index: number) {
+        this._relevantBindings.insertAtIndex(newValue, index);
+    }
+    moveRelevantBindings(oldIndex: number, newIndex: number) {
+        this._relevantBindings.move(oldIndex, newIndex);
+    }
+
     public constructor(classifier: Classifier, id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage) {
         super(classifier, id, receiveDelta, parentInfo);
         this._reducedNode = new RequiredSingleReferenceValueManager<Reducible>(ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode, this);
+        this._relevantBindings = new OptionalMultiReferenceValueManager<ArgumentBinding>(ReductionDSLBase.INSTANCE.TraceAnnotation_relevantBindings, this);
     }
 
     getReferenceValueManager(reference: Reference): ReferenceValueManager<INodeBase> {
-        if (reference.key === ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode.key) {
-            return this._reducedNode;
+        switch (reference.key) {
+            case ReductionDSLBase.INSTANCE.TraceAnnotation_reducedNode.key: return this._reducedNode;
+            case ReductionDSLBase.INSTANCE.TraceAnnotation_relevantBindings.key: return this._relevantBindings;
+            default: return super.getReferenceValueManager(reference);
         }
-        return super.getReferenceValueManager(reference);
     }
 }
 

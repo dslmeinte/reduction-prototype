@@ -149,8 +149,13 @@ export const tracedTextRenderOf = (node: INodeBase): string => {
 
     const recurse = internalRenderOf(node)
     const maybeTraceAnnotation = traceAnnotationOf(node)
-    return maybeTraceAnnotation === undefined
-        ? recurse
-        : `[${recurse} {= reduction of: ${isRef(maybeTraceAnnotation.reducedNode) ? internalRenderOf(maybeTraceAnnotation.reducedNode) : "<unresolved reduced node>"}}]`
+    if (maybeTraceAnnotation === undefined) {
+        return recurse
+    }
+
+    const {reducedNode, relevantBindings} = maybeTraceAnnotation
+    const innerTraceMessage = (isRef(reducedNode) ? internalRenderOf(reducedNode) : "<unresolved reduced node>")
+        + (relevantBindings.length === 0 ? "" : `, with ${relevantBindings.filter(isRef).map(({argument, value}) => `${argument!.name} = ${textRenderOf(value)}`).join(", ")}`)
+    return `[${recurse} {= reduction of: ${innerTraceMessage}}]`
 }
 

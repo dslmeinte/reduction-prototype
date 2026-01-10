@@ -120,7 +120,7 @@ This looks as follows, in the textual syntax for this DSL:
 include::packages/prototype/artifacts/example-program.syntax.txt[]
 ```
 
-It is _expected_ to reduce to the following, including tracing information:
+It reduces to the following, including tracing information:
 
 ```
 include::packages/prototype/artifacts/example-program.reduction.syntax.expected.txt[]
@@ -133,5 +133,5 @@ include::packages/prototype/artifacts/example-program.findings.expected.txt[]
 ```
 
 (The node IDs here are generated sequentially, so might differ, and are not important anyway.)
-*Currently, these expectations are not met _yet_.*
+*Currently, those expectations are not met _yet_.*
 

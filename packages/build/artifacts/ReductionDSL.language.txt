@@ -60,6 +60,7 @@ language ReductionDSL
             annotates: Reducible
             features (↓name):
                 reducedNode -> Reducible
+                relevantBindings -> ArgumentBinding[0..*]
 
         interface Value extends Reducible, Statement
 

@@ -66,5 +66,5 @@ const TraceAnnotation = factory.annotation("TraceAnnotation").annotating(Reducib
 factory.reference(TraceAnnotation, "reducedNode").ofType(Reducible)
 // Note: needs to be a reference and not a containment.
 // Otherwise, if the result of reduction ends up being a child of another transient node, this containment will get emptied.
-// TODO  also reference the ArgumentBinding-s that were relevant
+factory.reference(TraceAnnotation, "relevantBindings").ofType(ArgumentBinding).isOptional().isMultiple()
 

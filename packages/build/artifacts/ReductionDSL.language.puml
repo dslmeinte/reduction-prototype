@@ -67,6 +67,7 @@ Program "1" o--> "*" Statement: statements
 
 
 TraceAnnotation "*" --> "1" Reducible: reducedNode
+TraceAnnotation "*" --> "*" ArgumentBinding: relevantBindings
 
 WrappedOriginalNode "*" --> "1" Reducible: originalNode
 

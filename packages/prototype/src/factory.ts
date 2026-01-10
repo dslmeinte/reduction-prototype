@@ -158,12 +158,15 @@ export const transientNodeFactory = () => new NodeFactory(transientId)
 /**
  * @return the given `resultNode` with an annotation referencing the given `reducedNode`.
  */
-export const withTrace = (resultNode: Reducible, reducedNode: Reducible) => {
+export const withTrace = (resultNode: Reducible, reducedNode: Reducible, ...relevantBindings: ArgumentBinding[]) => {
     if (!isTransient(resultNode)) {
         throw new Error(`can only add trace annotations to transient nodes, not to a node with ID "${resultNode.id}" `)
     }
     const traceAnnotation = TraceAnnotation.create(traceId())
     traceAnnotation.reducedNode = reducedNode
+    relevantBindings.forEach((binding) => {
+        traceAnnotation.addRelevantBindings(binding)
+    })
     if (resultNode.annotations.some((annotation) => annotation instanceof TraceAnnotation)) {
         console.log(`[WARN] adding trace annotation (with ID "${traceAnnotation.id}") to node with ID "${resultNode.id}" that already has trace annotations`)
     }

@@ -4,17 +4,21 @@ Program (id: transient-id-1020)
             value = 6
             @ TraceAnnotation (id: trace-id-1000006)
                 reducedNode -> transient-id-1006
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000007)
                 reducedNode -> id-11
+                relevantBindings -> <none>
 
         NumberLiteral (id: transient-id-1014)
             value = 3
             @ TraceAnnotation (id: trace-id-1000013)
                 reducedNode -> transient-id-1013
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000014)
                 reducedNode -> id-14
+                relevantBindings -> <none>
 
         BinaryOperation (id: transient-id-1019)
             operator = ReductionDSL-BinaryOperators-plus
@@ -29,24 +33,30 @@ Program (id: transient-id-1020)
                             originalNode -> id-15
                             @ TraceAnnotation (id: trace-id-1000015)
                                 reducedNode -> id-2
+                                relevantBindings -> id-16
 
                     @ TraceAnnotation (id: trace-id-1000016)
                         reducedNode -> id-4
+                        relevantBindings -> <none>
 
                     @ TraceAnnotation (id: trace-id-1000017)
                         reducedNode -> id-5
+                        relevantBindings -> <none>
 
             right:
                 WrappedOriginalNode (id: transient-id-1018)
                     originalNode -> id-6
             @ TraceAnnotation (id: trace-id-1000018)
                 reducedNode -> id-7
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000019)
                 reducedNode -> id-17
+                relevantBindings -> <none>
 
     @ TraceAnnotation (id: trace-id-1000020)
         reducedNode -> id-18
+        relevantBindings -> <none>
 
 BinaryOperation (id: transient-id-1003)
     operator = ReductionDSL-BinaryOperators-plusWithPositiveOperands
@@ -58,9 +68,11 @@ BinaryOperation (id: transient-id-1003)
             originalNode -> id-9
             @ TraceAnnotation (id: trace-id-1000001)
                 reducedNode -> id-2
+                relevantBindings -> id-10
 
     @ TraceAnnotation (id: trace-id-1000002)
         reducedNode -> id-4
+        relevantBindings -> <none>
 
 BinaryOperation (id: transient-id-1006)
     operator = ReductionDSL-BinaryOperators-plus
@@ -69,15 +81,18 @@ BinaryOperation (id: transient-id-1006)
             value = 3
             @ TraceAnnotation (id: trace-id-1000003)
                 reducedNode -> transient-id-1003
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000004)
                 reducedNode -> id-5
+                relevantBindings -> <none>
 
     right:
         WrappedOriginalNode (id: transient-id-1005)
             originalNode -> id-6
     @ TraceAnnotation (id: trace-id-1000005)
         reducedNode -> id-7
+        relevantBindings -> <none>
 
 BinaryOperation (id: transient-id-1010)
     operator = ReductionDSL-BinaryOperators-plusWithPositiveOperands
@@ -89,9 +104,11 @@ BinaryOperation (id: transient-id-1010)
             originalNode -> id-12
             @ TraceAnnotation (id: trace-id-1000008)
                 reducedNode -> id-2
+                relevantBindings -> id-13
 
     @ TraceAnnotation (id: trace-id-1000009)
         reducedNode -> id-4
+        relevantBindings -> <none>
 
 BinaryOperation (id: transient-id-1013)
     operator = ReductionDSL-BinaryOperators-plus
@@ -100,15 +117,18 @@ BinaryOperation (id: transient-id-1013)
             value = 0
             @ TraceAnnotation (id: trace-id-1000010)
                 reducedNode -> transient-id-1010
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000011)
                 reducedNode -> id-5
+                relevantBindings -> <none>
 
     right:
         WrappedOriginalNode (id: transient-id-1012)
             originalNode -> id-6
     @ TraceAnnotation (id: trace-id-1000012)
         reducedNode -> id-7
+        relevantBindings -> <none>
 
 Program (id: transient-id-1020)
     statements:
@@ -116,17 +136,21 @@ Program (id: transient-id-1020)
             value = 6
             @ TraceAnnotation (id: trace-id-1000006)
                 reducedNode -> transient-id-1006
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000007)
                 reducedNode -> id-11
+                relevantBindings -> <none>
 
         NumberLiteral (id: transient-id-1014)
             value = 3
             @ TraceAnnotation (id: trace-id-1000013)
                 reducedNode -> transient-id-1013
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000014)
                 reducedNode -> id-14
+                relevantBindings -> <none>
 
         BinaryOperation (id: transient-id-1019)
             operator = ReductionDSL-BinaryOperators-plus
@@ -141,22 +165,28 @@ Program (id: transient-id-1020)
                             originalNode -> id-15
                             @ TraceAnnotation (id: trace-id-1000015)
                                 reducedNode -> id-2
+                                relevantBindings -> id-16
 
                     @ TraceAnnotation (id: trace-id-1000016)
                         reducedNode -> id-4
+                        relevantBindings -> <none>
 
                     @ TraceAnnotation (id: trace-id-1000017)
                         reducedNode -> id-5
+                        relevantBindings -> <none>
 
             right:
                 WrappedOriginalNode (id: transient-id-1018)
                     originalNode -> id-6
             @ TraceAnnotation (id: trace-id-1000018)
                 reducedNode -> id-7
+                relevantBindings -> <none>
 
             @ TraceAnnotation (id: trace-id-1000019)
                 reducedNode -> id-17
+                relevantBindings -> <none>
 
     @ TraceAnnotation (id: trace-id-1000020)
         reducedNode -> id-18
+        relevantBindings -> <none>
 

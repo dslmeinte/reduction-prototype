@@ -41,7 +41,7 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
             const lookups = nonLocalValues.filter((binding) => binding.argument === node.argument)
             return lookups.length === 1
                 ? {
-                    value: withTrace(transientNodeFactory.wrappedOriginalNode(lookups[0].value), node),
+                    value: withTrace(transientNodeFactory.wrappedOriginalNode(lookups[0].value), node, lookups[0]),
                     findings: []
                 }
                 : {
