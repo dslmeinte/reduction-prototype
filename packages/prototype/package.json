@@ -12,16 +12,20 @@
         "clean": "npx rimraf dist node_modules",
         "build": "tsc",
         "pretest": "npm run build",
-        "test": "node dist/run.js",
+        "test": "mocha dist/tests",
         "lint": "eslint src"
     },
     "dependencies": {
         "@lionweb/class-core": "0.7.2",
         "@lionweb/core": "0.7.2",
         "@lionweb/json": "0.7.2",
-        "littoral-templates": "0.5.1"
+        "chai": "6.2.2",
+        "littoral-templates": "0.5.1",
+        "mocha": "11.7.5"
     },
     "devDependencies": {
+        "@types/chai": "5.2.3",
+        "@types/mocha": "10.0.10",
         "@types/node": "25.0.3"
     }
 }

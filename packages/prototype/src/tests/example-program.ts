@@ -1,5 +1,5 @@
-import { BinaryOperators, Value } from "./gen/ReductionDSL.g.js"
-import { originalNodeFactory } from "./factory.js"
+import { BinaryOperators, Value } from "../gen/ReductionDSL.g.js"
+import { originalNodeFactory } from "../factory.js"
 
 const {
     argumentBinding,
