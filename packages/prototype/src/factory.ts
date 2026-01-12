@@ -167,9 +167,6 @@ export const withTrace = (resultNode: Reducible, reducedNode: Reducible, ...rele
     relevantBindings.forEach((binding) => {
         traceAnnotation.addRelevantBindings(binding)
     })
-    if (resultNode.annotations.some((annotation) => annotation instanceof TraceAnnotation)) {
-        console.log(`[WARN] adding trace annotation (with ID "${traceAnnotation.id}") to node with ID "${resultNode.id}" that already has trace annotations`)
-    }
     resultNode.addAnnotation(traceAnnotation)
     return resultNode
 }

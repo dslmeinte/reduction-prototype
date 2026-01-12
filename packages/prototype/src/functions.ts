@@ -7,8 +7,8 @@ export const unwrap = (reducible: Reducible) =>
     reducible instanceof WrappedOriginalNode ? reducible.originalNode : reducible
 
 /**
- * @return the *first* {@link TraceAnnotation} on the given reducible, or `undefined` if there’s none.
+ * @return the {@link TraceAnnotation}s on the given reducible.
  */
-export const traceAnnotationOf = (reducible: Reducible): TraceAnnotation | undefined =>
-    reducible.annotations.find((annotation) => annotation instanceof TraceAnnotation)
+export const traceAnnotationsOf = (reducible: Reducible): TraceAnnotation[] =>
+    reducible.annotations.filter((annotation) => annotation instanceof TraceAnnotation)
 

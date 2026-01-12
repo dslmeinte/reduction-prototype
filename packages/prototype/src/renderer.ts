@@ -16,7 +16,7 @@ import {
     StringLiteral,
     WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
-import { traceAnnotationOf } from "./functions.js"
+import { traceAnnotationsOf } from "./functions.js"
 
 
 const indent = indentWith("    ")(1)
@@ -147,15 +147,16 @@ export const tracedTextRenderOf = (node: INodeBase): string => {
         throw new Error(`couldn’t render instance of ${node.classifier.name} as text: not implemented`)
     }
 
-    const recurse = internalRenderOf(node)
-    const maybeTraceAnnotation = traceAnnotationOf(node)
-    if (maybeTraceAnnotation === undefined) {
-        return recurse
+    const innerRender = internalRenderOf(node)
+    const traceAnnotations = traceAnnotationsOf(node)
+    if (traceAnnotations.length === 0) {
+        return innerRender
     }
 
-    const {reducedNode, relevantBindings} = maybeTraceAnnotation
+    // take the first one (=arbitrary choice):
+    const {reducedNode, relevantBindings} = traceAnnotations[0]
     const innerTraceMessage = (isRef(reducedNode) ? internalRenderOf(reducedNode) : "<unresolved reduced node>")
         + (relevantBindings.length === 0 ? "" : `, with ${relevantBindings.filter(isRef).map(({argument, value}) => `${argument!.name} = ${textRenderOf(value)}`).join(", ")}`)
-    return `[${recurse} {= reduction of: ${innerTraceMessage}}]`
+    return `[${innerRender} {= reduction of: ${innerTraceMessage}}]`
 }
 

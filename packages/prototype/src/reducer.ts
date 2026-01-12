@@ -8,8 +8,7 @@ import {
     Parentheses,
     Program,
     Reducible,
-    StringLiteral,
-    WrappedOriginalNode
+    StringLiteral
 } from "./gen/ReductionDSL.g.js"
 import { isReducible } from "./gen/reducibles.g.js"
 import { NodeFactory, withTrace } from "./factory.js"
@@ -94,12 +93,12 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
             // TODO  check whether bindings match exactly with the arguments declared on the function — can’t reduce if not all are bound / need findings on doubly-bound ones
             const reduction = reduce(node.function!.value, [...nonLocalValues, ...node.bindings])
             return {
-                value: withTrace(reduction.value, node),
+                value: withTrace(reduction.value, node, ...nonLocalValues),
                 findings: reduction.findings   // (see TODO above)
             }
         }
 
-        if (node instanceof NumberLiteral) {
+        if (node instanceof NumberLiteral || node instanceof StringLiteral) {
             return {
                 value: transientNodeFactory.wrappedOriginalNode(node),
                 findings: []
@@ -120,20 +119,6 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
             return {
                 value: withTrace(transientNodeFactory.program(...reductionsOfReducibleStatements.map(({value}) => value)), node),
                 findings: reductionsOfReducibleStatements.flatMap(({findings}) => findings)
-            }
-        }
-
-        if (node instanceof StringLiteral) {
-            return {
-                value: transientNodeFactory.wrappedOriginalNode(node),
-                findings: []
-            }
-        }
-
-        if (node instanceof WrappedOriginalNode) {
-            return {
-                value: node,
-                findings: []
             }
         }
 

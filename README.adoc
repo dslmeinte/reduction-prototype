@@ -70,7 +70,7 @@ A prime example of that is the expression “1 + "bar"”: this should trigger a
 On the other hand, the expression “1 ⊕ -1” should trigger the constraint validation for the ⊕ operator, but it’d be perfectly alright to afford this expression the value of “0”.
 (Other examples would be evaluating the square root of -1, or an `ArgumentReference` for which the corresponding binding is missing — e.g. through an incomplete `FunctionInvocation`.)
 
-The implemented reducer combines evaluation and validation.
+The implemented reducer _combines_ evaluation and validation.
 That’s convenient because the validation traverses the AST in the same way, _and_ benefits from having information at hand that’s produced during evaluation; specifically: non-local values (which would otherwise have to be looked up by inspecting call sites!), and evaluations of children.
 
 
@@ -134,4 +134,21 @@ include::packages/prototype/artifacts/example-program.findings.expected.txt[]
 
 (The node IDs here are generated sequentially, so might differ, and are not important anyway.)
 *Currently, those expectations are not met _yet_.*
+
+
+== Retrospective
+
+Observations/insights:
+
+* Many – even most? – transient nodes produced by the reducer end up “dangling”, meaning they’re essentially values that are thrown away, rather than contained by another transient node.
+That typically only happens when a node can only be _partially_ reduced.
+
+* A transient node can contain multiple `TraceAnnotation` instances.
+E.g., the reduction of a `FunctionInvocation` instance – assuming it is a full reduction – will have annotations pointing to the original `FunctionInvocation` instance, _as well as_ to the reduction prior to the final result of the invocation.
++
+For the textual syntax with tracing information, we simply pick the first one — at least for now.
+We might want to “peel off” ``TraceAnnotation``s, starting with the last — essentially a `foldRight`.
+
+* Splitting evaluation and validation could theoretically be done, but doesn’t offer advantages in this small setup.
+In particular, after such a split, the code would look quite duplicated.
 
