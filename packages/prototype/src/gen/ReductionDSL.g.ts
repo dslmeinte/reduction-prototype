@@ -142,17 +142,6 @@ export class ReductionDSLBase implements ILanguageBase {
         return this._StringLiteral_value;
     }
 
-    public readonly _Parentheses = new Concept(this._language, "Parentheses", "ReductionDSL-Parentheses", "ReductionDSL-Parentheses", false);
-    get Parentheses(): Concept {
-        this.ensureWiredUp();
-        return this._Parentheses;
-    }
-    private readonly _Parentheses_inner = new Containment(this._Parentheses, "inner", "ReductionDSL-Parentheses-inner", "ReductionDSL-Parentheses-inner");
-    get Parentheses_inner(): Containment {
-        this.ensureWiredUp();
-        return this._Parentheses_inner;
-    }
-
     public readonly _BinaryOperators = new Enumeration(this._language, "BinaryOperators", "ReductionDSL-BinaryOperators", "ReductionDSL-BinaryOperators");
     get BinaryOperators(): Enumeration {
         this.ensureWiredUp();
@@ -276,7 +265,7 @@ export class ReductionDSLBase implements ILanguageBase {
         if (this._wiredUp) {
             return;
         }
-        this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._Parentheses, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._WrappedOriginalNode, this._TraceAnnotation);
+        this._language.havingEntities(this._Reducible, this._Statement, this._Value, this._ArgumentDeclaration, this._FunctionDeclaration, this._Literal, this._NumberLiteral, this._StringLiteral, this._BinaryOperators, this._BinaryOperation, this._ArgumentBinding, this._FunctionInvocation, this._ArgumentReference, this._Program, this._WrappedOriginalNode, this._TraceAnnotation);
         this._Value.extending(this._Reducible, this._Statement);
         this._ArgumentDeclaration.implementing(LionCore_builtinsBase.INSTANCE._INamed);
         this._FunctionDeclaration.implementing(this._Statement, LionCore_builtinsBase.INSTANCE._INamed);
@@ -290,9 +279,6 @@ export class ReductionDSLBase implements ILanguageBase {
         this._StringLiteral.implementing(this._Literal);
         this._StringLiteral.havingFeatures(this._StringLiteral_value);
         this._StringLiteral_value.ofType(LionCore_builtinsBase.INSTANCE._String);
-        this._Parentheses.implementing(this._Value);
-        this._Parentheses.havingFeatures(this._Parentheses_inner);
-        this._Parentheses_inner.ofType(this._Value);
         this._BinaryOperators.havingLiterals(this._BinaryOperators_plus, this._BinaryOperators_plusWithPositiveOperands);
         this._BinaryOperation.implementing(this._Value);
         this._BinaryOperation.havingFeatures(this._BinaryOperation_operator, this._BinaryOperation_left, this._BinaryOperation_right);
@@ -328,7 +314,6 @@ export class ReductionDSLBase implements ILanguageBase {
                 case this._FunctionDeclaration.key: return FunctionDeclaration.create(id, receiveDelta);
                 case this._NumberLiteral.key: return NumberLiteral.create(id, receiveDelta);
                 case this._StringLiteral.key: return StringLiteral.create(id, receiveDelta);
-                case this._Parentheses.key: return Parentheses.create(id, receiveDelta);
                 case this._BinaryOperation.key: return BinaryOperation.create(id, receiveDelta);
                 case this._ArgumentBinding.key: return ArgumentBinding.create(id, receiveDelta);
                 case this._FunctionInvocation.key: return FunctionInvocation.create(id, receiveDelta);
@@ -511,35 +496,6 @@ export class StringLiteral extends NodeBase implements Literal {
             return this._value;
         }
         return super.getPropertyValueManager(property);
-    }
-}
-
-export class Parentheses extends NodeBase implements Value {
-    static create(id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage): Parentheses {
-        return new Parentheses(ReductionDSLBase.INSTANCE.Parentheses, id, receiveDelta, parentInfo);
-    }
-
-    private readonly _inner: RequiredSingleContainmentValueManager<Value>;
-    get inner(): Value {
-        return this._inner.get();
-    }
-    set inner(newValue: Value) {
-        this._inner.set(newValue);
-    }
-    replaceInnerWith(newValue: Value) {
-        this._inner.replaceWith(newValue);
-    }
-
-    public constructor(classifier: Classifier, id: LionWebId, receiveDelta?: DeltaReceiver, parentInfo?: Parentage) {
-        super(classifier, id, receiveDelta, parentInfo);
-        this._inner = new RequiredSingleContainmentValueManager<Value>(ReductionDSLBase.INSTANCE.Parentheses_inner, this);
-    }
-
-    getContainmentValueManager(containment: Containment): ContainmentValueManager<INodeBase> {
-        if (containment.key === ReductionDSLBase.INSTANCE.Parentheses_inner.key) {
-            return this._inner;
-        }
-        return super.getContainmentValueManager(containment);
     }
 }
 

@@ -28,7 +28,6 @@ import {
     FunctionDeclaration,
     FunctionInvocation,
     NumberLiteral,
-    Parentheses,
     Program,
     StringLiteral,
     WrappedOriginalNode
@@ -81,10 +80,6 @@ export const textRenderOf: TextRenderer = (node) => {
 
     if (node instanceof NumberLiteral) {
         return `${node.value}`
-    }
-
-    if (node instanceof Parentheses) {
-        return `(${textRenderOf(node.inner)})`
     }
 
     if (node instanceof Program) {
@@ -140,10 +135,6 @@ export const tracedTextRenderOf = (node: INodeBase): string => {
 
         if (node instanceof NumberLiteral) {
             return `${node.value}`
-        }
-
-        if (node instanceof Parentheses) {
-            return `(${tracedTextRenderOf(node.inner)})`
         }
 
         if (node instanceof Program) {

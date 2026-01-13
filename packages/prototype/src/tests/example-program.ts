@@ -26,7 +26,6 @@ const {
     functionDeclaration,
     functionInvocation,
     numberLiteral,
-    parentheses,
     program,
     stringLiteral
 } = originalNodeFactory()
@@ -38,8 +37,7 @@ const argX = argumentDeclaration("X")
 
 const refX = argumentReference(argX)
 const innerPlus = binaryOperation(BinaryOperators.plusWithPositiveOperands, numberLiteral(1), refX)
-const parens = parentheses(innerPlus)
-const outerPlus = binaryOperation(BinaryOperators.plus, parens, numberLiteral(3))
+const outerPlus = binaryOperation(BinaryOperators.plus, innerPlus, numberLiteral(3))
 
 const foo = functionDeclaration("foo", outerPlus, argX)
 

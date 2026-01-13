@@ -40,10 +40,6 @@ language ReductionDSL
             features (↓name):
                 value: Integer
 
-        concept Parentheses implements Value
-            features (↓name):
-                inner: Value
-
         <<partition>> concept Program implements Reducible
             features (↓name):
                 statements: Statement[0..*]

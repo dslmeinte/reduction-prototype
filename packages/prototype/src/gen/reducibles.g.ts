@@ -30,7 +30,6 @@ const reducibleMetaTypes = [
     base.BinaryOperation,
     base.FunctionInvocation,
     base.NumberLiteral,
-    base.Parentheses,
     base.Program,
     base.StringLiteral,
     base.WrappedOriginalNode

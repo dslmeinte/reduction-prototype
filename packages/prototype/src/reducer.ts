@@ -22,7 +22,6 @@ import {
     BinaryOperation,
     FunctionInvocation,
     NumberLiteral,
-    Parentheses,
     Program,
     Reducible,
     StringLiteral
@@ -100,15 +99,6 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
                 value: transientNodeFactory.wrappedOriginalNode(node),
                 wasReductive: false,
                 findings: []
-            }
-        }
-
-        if (node instanceof Parentheses) {
-            const innerReduction = reduce(node.inner, nonLocalValues)
-            return {
-                value: withTrace(innerReduction.value, node),
-                wasReductive: true,
-                findings: innerReduction.findings
             }
         }
 

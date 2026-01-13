@@ -25,7 +25,6 @@ import {
     FunctionDeclaration,
     FunctionInvocation,
     NumberLiteral,
-    Parentheses,
     Program,
     Reducible,
     Statement,
@@ -115,13 +114,6 @@ export class NodeFactory {
     numberLiteral = (value: number) => {
         const node = NumberLiteral.create(this.idProvider())
         node.value = value
-        this.register(node)
-        return node
-    }
-
-    parentheses = (inner: Value) => {
-        const node = Parentheses.create(this.idProvider())
-        node.inner = inner
         this.register(node)
         return node
     }

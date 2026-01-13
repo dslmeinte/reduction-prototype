@@ -28,8 +28,6 @@ class NumberLiteral implements Literal {
   value: Integer
 }
 
-class Parentheses implements Value
-
 class Program <<partition>> implements Reducible
 
 interface Reducible
@@ -61,7 +59,6 @@ FunctionInvocation "*" --> "1" FunctionDeclaration: function
 FunctionInvocation "1" o--> "*" ArgumentBinding: bindings
 
 
-Parentheses "1" o--> "1" Value: inner
 Program "1" o--> "*" Statement: statements
 
 

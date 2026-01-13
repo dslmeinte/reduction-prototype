@@ -1,5 +1,5 @@
 program:
-    function foo(X) ⇒ (1 ⊕ ref<X>) + 3
+    function foo(X) ⇒ 1 ⊕ ref<X> + 3
     foo(X = 2)
     foo(X = -1)
     foo(X = "bar")

@@ -47,9 +47,6 @@ factory.property(NumberLiteral, "value").ofType(integerDataType)
 const StringLiteral = factory.concept("StringLiteral", false).implementing(Literal)
 factory.property(StringLiteral, "value").ofType(stringDataType)
 
-const Parentheses = factory.concept("Parentheses", false).implementing(Value)
-factory.containment(Parentheses, "inner").ofType(Value)
-
 const BinaryOperators = factory.enumeration("BinaryOperators")
 factory.enumerationLiteral(BinaryOperators, "plus")
 factory.enumerationLiteral(BinaryOperators, "plusWithPositiveOperands")
