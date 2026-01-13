@@ -15,13 +15,7 @@
 // SPDX-FileCopyrightText: 2026 TRUMPF Laser SE and other contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Reducible } from "./gen/ReductionDSL.g.js"
-import { Finding } from "./findings.js"
+import { defaultTrumpfOriginatingApache2_0LicensedHeader } from "@lionweb/class-core-generator"
 
-
-export type Reduction = {
-    value: Reducible
-    wasReductive: boolean
-    findings: Finding[]
-}
+export const header = defaultTrumpfOriginatingApache2_0LicensedHeader.replaceAll("2025", "2026")
 
