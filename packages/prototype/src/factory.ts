@@ -17,7 +17,7 @@ import {
     Value,
     WrappedOriginalNode
 } from "./gen/ReductionDSL.g.js"
-import { IdProvider, isTransient, originalId, traceId, transientId } from "./ids.js"
+import { IdProvider, isTransient, originalIdProvider, traceId, transientIdProvider } from "./ids.js"
 
 
 /**
@@ -127,16 +127,13 @@ export class NodeFactory {
 
     /**
      * @return a {@link WrappedOriginalNode wrapped version} of the given original {@link Reducible reducible} {@link INodeBase node}.
-     * Note that it’s checked that the ID provider is a transient ID provider, and that `originalNode` really is an original node.
+     * Note that it’s checked that `originalNode` really is an original node.
      */
     wrappedOriginalNode = (originalNode: Reducible) => {
-        if (this.idProvider !== transientId) {
-            throw new Error(`trying to wrap a node as original node`)
-        }
         if (isTransient(originalNode)) {
             throw new Error(`trying to wrap a transient node as original`)
         }
-        const node = WrappedOriginalNode.create(transientId())   // (force returning a transient node)
+        const node = WrappedOriginalNode.create(this.idProvider())   // (force returning a transient node)
         node.originalNode = originalNode
         this.register(node)
         return node
@@ -148,11 +145,11 @@ export class NodeFactory {
 /**
  * @return a new node factory for original nodes.
  */
-export const originalNodeFactory = () => new NodeFactory(originalId)
+export const originalNodeFactory = () => new NodeFactory(originalIdProvider())
 /**
  * @return a new node factory for transient nodes.
  */
-export const transientNodeFactory = () => new NodeFactory(transientId)
+export const transientNodeFactory = () => new NodeFactory(transientIdProvider())
 
 
 /**

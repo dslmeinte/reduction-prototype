@@ -1,8 +1,8 @@
+import { isRef } from "@lionweb/core"
 import {
     ArgumentBinding,
     ArgumentReference,
     BinaryOperation,
-    BinaryOperators,
     FunctionInvocation,
     NumberLiteral,
     Parentheses,
@@ -11,11 +11,11 @@ import {
     StringLiteral
 } from "./gen/ReductionDSL.g.js"
 import { isReducible } from "./gen/reducibles.g.js"
+import { reduceBinaryOperation } from "./binary-operation.js"
 import { NodeFactory, withTrace } from "./factory.js"
-import { unwrap } from "./functions.js"
+import { finding } from "./findings.js"
 import { isOriginal } from "./ids.js"
 import { Reduction } from "./reduction.js"
-import { textRenderOf } from "./renderer.js"
 
 
 /**
@@ -41,15 +41,14 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
             return lookups.length === 1
                 ? {
                     value: withTrace(transientNodeFactory.wrappedOriginalNode(lookups[0].value), node, lookups[0]),
+                    wasReductive: true,
                     findings: []
                 }
                 : {
                     value: node,
+                    wasReductive: false,
                     findings: [
-                        {
-                            node,
-                            findingMessage: `The argument ${node.argument!.name} is not bound locally.`
-                        }
+                        finding(node, isRef(node.argument) ? `The argument ${node.argument!.name} is not bound locally.` : `The argument reference doesn’t resolve.`)
                     ]
                 }
         }
@@ -57,50 +56,32 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
         if (node instanceof BinaryOperation) {
             const leftReduction = reduce(node.left, nonLocalValues)
             const rightReduction = reduce(node.right, nonLocalValues)
-            const intermediate = withTrace(transientNodeFactory.binaryOperation(node.operator, leftReduction.value, rightReduction.value), node)
-            const leftIsNumber = unwrap(leftReduction.value) instanceof NumberLiteral
-            const rightIsNumber = unwrap(rightReduction.value) instanceof NumberLiteral
-            if (leftIsNumber && rightIsNumber) {
-                const leftNumber = (unwrap(leftReduction.value) as NumberLiteral).value
-                const rightNumber = (unwrap(rightReduction.value) as NumberLiteral).value
-                const sum = transientNodeFactory.numberLiteral(leftNumber + rightNumber)
-                return {
-                    value: withTrace(sum, intermediate),
-                    findings: [
-                        ...leftReduction.findings,
-                        ...rightReduction.findings,
-                        ...(
-                            node.operator === BinaryOperators.plusWithPositiveOperands
-                                ? [
-                                    ...(leftNumber <= 0 ? [{ node: leftReduction.value, findingMessage: `The left hand side of ${textRenderOf(intermediate)} should be a positive number.` }] : []),
-                                    ...(rightNumber <= 0 ? [{ node: rightReduction.value, findingMessage: `The right hand side of ${textRenderOf(intermediate)} should be a positive number.` }] : [])
-                                ]
-                                : []
-                        )
-                    ]
-                }
-            }
-            return {
-                value: intermediate,
-                findings: [
-                    ...(leftIsNumber ? [] : [{ node: leftReduction.value, findingMessage: `The left hand side of ${textRenderOf(node)} should be a number.`}]),
-                    ...(rightIsNumber ? [] : [{ node: rightReduction.value, findingMessage: `The right hand side of ${textRenderOf(node)} should be a number.`}])
-                ]
-            }
+            return reduceBinaryOperation(node, leftReduction, rightReduction, transientNodeFactory)
         }
 
         if (node instanceof FunctionInvocation) {
-            // TODO  check whether bindings match exactly with the arguments declared on the function — can’t reduce if not all are bound / need findings on doubly-bound ones
-            const reduction = reduce(node.function!.value, [...nonLocalValues, ...node.bindings])
+            if (isRef(node.function)) {
+                // TODO  check whether bindings match exactly with the arguments declared on the function — can’t reduce if not all are bound / need findings on doubly-bound ones
+                const reduction = reduce(node.function.value, [...nonLocalValues, ...node.bindings])
+                return {
+                    value: withTrace(reduction.value, node, ...nonLocalValues),
+                    wasReductive: true,
+                    findings: reduction.findings   // (see TODO above)
+                }
+            }
             return {
-                value: withTrace(reduction.value, node, ...nonLocalValues),
-                findings: reduction.findings   // (see TODO above)
+                value: node,
+                wasReductive: false,
+                findings: [
+                    finding(node, `The function reference doesn’t resolve.`)
+                ]
             }
         }
 
         if (node instanceof NumberLiteral || node instanceof StringLiteral) {
             return {
                 value: transientNodeFactory.wrappedOriginalNode(node),
+                wasReductive: false,
                 findings: []
             }
         }
@@ -109,6 +90,7 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
             const innerReduction = reduce(node.inner, nonLocalValues)
             return {
                 value: withTrace(innerReduction.value, node),
+                wasReductive: true,
                 findings: innerReduction.findings
             }
         }
@@ -118,6 +100,7 @@ export const reduceUsing = (transientNodeFactory: NodeFactory): Reducer<Reducibl
             // (We don’t have to keep function declarations in case function invocation don’t reduce completely, because the partial reductions would reference the original function declarations.)
             return {
                 value: withTrace(transientNodeFactory.program(...reductionsOfReducibleStatements.map(({value}) => value)), node),
+                wasReductive: reductionsOfReducibleStatements.some(({wasReductive}) => wasReductive),
                 findings: reductionsOfReducibleStatements.flatMap(({findings}) => findings)
             }
         }

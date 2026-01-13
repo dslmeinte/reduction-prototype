@@ -2,21 +2,21 @@ Program (id: transient-id-1020)
     statements:
         NumberLiteral (id: transient-id-1007)
             value = 6
-            @ TraceAnnotation (id: trace-id-1000006)
+            @ TraceAnnotation (id: trace-id-1000011)
                 reducedNode -> transient-id-1006
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000007)
+            @ TraceAnnotation (id: trace-id-1000012)
                 reducedNode -> id-11
                 relevantBindings -> <none>
 
         NumberLiteral (id: transient-id-1014)
             value = 3
-            @ TraceAnnotation (id: trace-id-1000013)
+            @ TraceAnnotation (id: trace-id-1000018)
                 reducedNode -> transient-id-1013
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000014)
+            @ TraceAnnotation (id: trace-id-1000019)
                 reducedNode -> id-14
                 relevantBindings -> <none>
 
@@ -31,30 +31,30 @@ Program (id: transient-id-1020)
                     right:
                         WrappedOriginalNode (id: transient-id-1016)
                             originalNode -> id-15
-                            @ TraceAnnotation (id: trace-id-1000015)
+                            @ TraceAnnotation (id: trace-id-1000020)
                                 reducedNode -> id-2
                                 relevantBindings -> id-16
 
-                    @ TraceAnnotation (id: trace-id-1000016)
+                    @ TraceAnnotation (id: trace-id-1000021)
                         reducedNode -> id-4
                         relevantBindings -> <none>
 
-                    @ TraceAnnotation (id: trace-id-1000017)
+                    @ TraceAnnotation (id: trace-id-1000022)
                         reducedNode -> id-5
                         relevantBindings -> <none>
 
             right:
                 WrappedOriginalNode (id: transient-id-1018)
                     originalNode -> id-6
-            @ TraceAnnotation (id: trace-id-1000018)
+            @ TraceAnnotation (id: trace-id-1000023)
                 reducedNode -> id-7
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000019)
+            @ TraceAnnotation (id: trace-id-1000024)
                 reducedNode -> id-17
                 relevantBindings -> <none>
 
-    @ TraceAnnotation (id: trace-id-1000020)
+    @ TraceAnnotation (id: trace-id-1000025)
         reducedNode -> id-18
         relevantBindings -> <none>
 
@@ -66,11 +66,11 @@ BinaryOperation (id: transient-id-1003)
     right:
         WrappedOriginalNode (id: transient-id-1002)
             originalNode -> id-9
-            @ TraceAnnotation (id: trace-id-1000001)
+            @ TraceAnnotation (id: trace-id-1000006)
                 reducedNode -> id-2
                 relevantBindings -> id-10
 
-    @ TraceAnnotation (id: trace-id-1000002)
+    @ TraceAnnotation (id: trace-id-1000007)
         reducedNode -> id-4
         relevantBindings -> <none>
 
@@ -79,18 +79,18 @@ BinaryOperation (id: transient-id-1006)
     left:
         NumberLiteral (id: transient-id-1004)
             value = 3
-            @ TraceAnnotation (id: trace-id-1000003)
+            @ TraceAnnotation (id: trace-id-1000008)
                 reducedNode -> transient-id-1003
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000004)
+            @ TraceAnnotation (id: trace-id-1000009)
                 reducedNode -> id-5
                 relevantBindings -> <none>
 
     right:
         WrappedOriginalNode (id: transient-id-1005)
             originalNode -> id-6
-    @ TraceAnnotation (id: trace-id-1000005)
+    @ TraceAnnotation (id: trace-id-1000010)
         reducedNode -> id-7
         relevantBindings -> <none>
 
@@ -102,11 +102,11 @@ BinaryOperation (id: transient-id-1010)
     right:
         WrappedOriginalNode (id: transient-id-1009)
             originalNode -> id-12
-            @ TraceAnnotation (id: trace-id-1000008)
+            @ TraceAnnotation (id: trace-id-1000013)
                 reducedNode -> id-2
                 relevantBindings -> id-13
 
-    @ TraceAnnotation (id: trace-id-1000009)
+    @ TraceAnnotation (id: trace-id-1000014)
         reducedNode -> id-4
         relevantBindings -> <none>
 
@@ -115,18 +115,18 @@ BinaryOperation (id: transient-id-1013)
     left:
         NumberLiteral (id: transient-id-1011)
             value = 0
-            @ TraceAnnotation (id: trace-id-1000010)
+            @ TraceAnnotation (id: trace-id-1000015)
                 reducedNode -> transient-id-1010
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000011)
+            @ TraceAnnotation (id: trace-id-1000016)
                 reducedNode -> id-5
                 relevantBindings -> <none>
 
     right:
         WrappedOriginalNode (id: transient-id-1012)
             originalNode -> id-6
-    @ TraceAnnotation (id: trace-id-1000012)
+    @ TraceAnnotation (id: trace-id-1000017)
         reducedNode -> id-7
         relevantBindings -> <none>
 
@@ -134,21 +134,21 @@ Program (id: transient-id-1020)
     statements:
         NumberLiteral (id: transient-id-1007)
             value = 6
-            @ TraceAnnotation (id: trace-id-1000006)
+            @ TraceAnnotation (id: trace-id-1000011)
                 reducedNode -> transient-id-1006
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000007)
+            @ TraceAnnotation (id: trace-id-1000012)
                 reducedNode -> id-11
                 relevantBindings -> <none>
 
         NumberLiteral (id: transient-id-1014)
             value = 3
-            @ TraceAnnotation (id: trace-id-1000013)
+            @ TraceAnnotation (id: trace-id-1000018)
                 reducedNode -> transient-id-1013
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000014)
+            @ TraceAnnotation (id: trace-id-1000019)
                 reducedNode -> id-14
                 relevantBindings -> <none>
 
@@ -163,30 +163,30 @@ Program (id: transient-id-1020)
                     right:
                         WrappedOriginalNode (id: transient-id-1016)
                             originalNode -> id-15
-                            @ TraceAnnotation (id: trace-id-1000015)
+                            @ TraceAnnotation (id: trace-id-1000020)
                                 reducedNode -> id-2
                                 relevantBindings -> id-16
 
-                    @ TraceAnnotation (id: trace-id-1000016)
+                    @ TraceAnnotation (id: trace-id-1000021)
                         reducedNode -> id-4
                         relevantBindings -> <none>
 
-                    @ TraceAnnotation (id: trace-id-1000017)
+                    @ TraceAnnotation (id: trace-id-1000022)
                         reducedNode -> id-5
                         relevantBindings -> <none>
 
             right:
                 WrappedOriginalNode (id: transient-id-1018)
                     originalNode -> id-6
-            @ TraceAnnotation (id: trace-id-1000018)
+            @ TraceAnnotation (id: trace-id-1000023)
                 reducedNode -> id-7
                 relevantBindings -> <none>
 
-            @ TraceAnnotation (id: trace-id-1000019)
+            @ TraceAnnotation (id: trace-id-1000024)
                 reducedNode -> id-17
                 relevantBindings -> <none>
 
-    @ TraceAnnotation (id: trace-id-1000020)
+    @ TraceAnnotation (id: trace-id-1000025)
         reducedNode -> id-18
         relevantBindings -> <none>
 

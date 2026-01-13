@@ -1,2 +1,3 @@
-on node with ID "transient-id-1009": The right hand side of 1 ⊕ -1 should be a positive number.
-on node with ID "transient-id-1017": The left hand side of (1 ⊕ ref<X>) + 3 should be a number.
+on node with ID "transient-id-1010": The right hand side of 1 ⊕ -1 should be a positive number.
+on node with ID "transient-id-1017": The right hand side of 1 ⊕ "bar" should be a number.
+on node with ID "transient-id-1019": The left hand side of 1 ⊕ "bar" + 3 should be a number.
